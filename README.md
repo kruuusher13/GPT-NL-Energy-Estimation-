@@ -113,12 +113,8 @@ m.fit(df)
 result = m.predict(n=400000, corpus="cc_github_opencode")
 ```
 
-## Live EKF Monitor
-
-The Extended Kalman Filter starts with a model prediction (wide confidence band) and converges to the true energy as each parallel task reports its measured energy. An innovation gate automatically rejects contaminated shared-node readings.
-
 ```bash
-# Replay a recorded run
+# Replay a recorded run (starts the dashboard above)
 gptnl-energy monitor --run amg_n16_size400000_rep1 --speed 0.5
 
 # Test the estimator
@@ -131,28 +127,90 @@ gptnl-energy monitor --gate-demo --run amg_n1_size400000_rep1
 gptnl-energy monitor --live --run <current-run-slug>
 ```
 
+## Live Monitor
+
+![Live EKF Monitor](assets/monitor_live.png)
+
+The terminal dashboard shows the EKF estimate converging in real time. **Left chart**: total pipeline energy estimate (cyan) with shrinking 95% confidence band (magenta), starting from the pre-run model prediction (white) and converging toward the measured truth (green). **Right chart**: real energy readings from the EAR meter per pipeline stage. **Sidebar**: current estimate, error, gate rejections, and streaming task log.
+
 ## Methodology
 
-### Three Prediction Layers
+### The Core Idea
 
-**Layer 1 — Physics (OLS)**: `E_stage = c₀ + c₁·n`
+Energy on an HPC node is `E = P × t` — power times time. But raw power readings on shared nodes are contaminated by co-tenant workloads. The key insight: **wall-clock time is co-tenancy invariant**, while power is inflated. So we:
 
-Each pipeline stage is modeled as a linear function of document count. Coefficients are calibrated from 2-4 sample sizes on exclusive nodes. R² ≥ 0.997 in-sample.
+1. Calibrate the time-per-document law on exclusive nodes (clean measurements)
+2. Multiply by effective power `P_eff` (also calibrated once) to get energy
+3. Use the Kalman filter during shared-node production runs to reject contaminated readings
 
-**Layer 2 — Learned g**: coefficient prediction for unseen corpora
+### Layer 1 — Per-Stage Physics
 
-The per-character energy constant `k = c₁ / chars_per_doc` is nearly invariant across corpora. The model `g` predicts `k` from data-derived features (compute intensity, survival rate, I/O rate) — enabling _cold prediction_ for a corpus never measured.
+Each pipeline stage follows a linear energy law:
 
-**Layer 3 — Kalman Filter (EKF)**:
+$$E^{(s)} = c_0^{(s)} + c_1^{(s)} \cdot n$$
 
-Sequential estimator with state = per-stage energy. Starts with the model prior, then blends in live telemetry as readings arrive. Innovation gate rejects contaminated readings (>2.5× stage budget). Converges to ~10% error after all stages complete.
+where $n$ is the number of documents. The intercept $c_0$ captures fixed overhead (SLURM startup, data loading). The slope $c_1$ captures per-document processing cost. Both are calibrated via ordinary least squares from 2–4 sample sizes on exclusive nodes (R² ≥ 0.997 in-sample).
 
-### Innovation Gate Performance
+The total pipeline energy is simply the sum:
+
+$$E_{\text{pipeline}} = \sum_{s \in \text{stages}} \left(c_0^{(s)} + c_1^{(s)} \cdot n\right)$$
+
+with a 95% prediction interval from the summed residual variance:
+
+$$CI_{95} = 1.96 \cdot \sqrt{\sum_s \sigma^2_{(s)}}$$
+
+### Layer 2 — Cross-Corpus Transfer
+
+The per-document coefficient $c_1$ varies wildly between corpora — a German parliamentary document is 100× longer than an American news story, so per-document energy scales accordingly. But the **per-character** coefficient is nearly invariant:
+
+$$k^{(s)} = \frac{c_1^{(s)}}{\text{chars\_per\_doc}} \approx \text{constant}$$
+
+Measured across 4 corpora spanning a 100× range in document length, $k$ has a coefficient of variation below 30%. This means for an unseen corpus, we predict:
+
+$$c_1^{\text{(unseen)}} = k_{\text{avg}} \cdot \text{chars\_per\_doc}_{\text{unseen}}$$
+
+The learned model $g$ improves on this by predicting $k$ from data-derived features — compute intensity (CPI, GFLOPS), I/O rate, and the survival rate after quality filtering — enabling cold prediction without any calibration runs on the target corpus.
+
+### Layer 3 — Extended Kalman Filter
+
+The EKF treats each pipeline stage's energy as a state variable. The prior is the model prediction. As each parallel task completes and reports its measured energy from the EAR meter, the filter recursively blends the prior with the data.
+
+**State vector**: $\mathbf{x} = [E^{(1)}, E^{(2)}, ..., E^{(S)}]$ — one energy per stage
+
+**Prior**: $\hat{\mathbf{x}}_0$ from the calibrated model, with initial covariance $\mathbf{P}_0 = (0.45 \cdot \hat{\mathbf{x}}_0)^2 \mathbf{I}$
+
+**Update** — when task $k$ of stage $s$ reports energy $z_k$:
+
+$$\hat{E}^{(s)}_k = w_k \cdot \left(z_k \cdot \frac{M_s}{k}\right) + (1 - w_k) \cdot \hat{E}^{(s)}_0$$
+
+where $w_k = \frac{k}{k + k_0}$ is the blending weight, $M_s$ is the total number of tasks in stage $s$, and $k_0 = 2$ controls how quickly we trust the data over the prior. The variance shrinks as more tasks report:
+
+$$\text{Var}(\hat{E}^{(s)}_k) = (1 - w_k)^2 \cdot P_0^{(s)} + \sigma^2_{\text{sample}} \cdot (M_s - k)$$
+
+**Innovation Gate** — a reading is rejected if a single task's energy exceeds the **entire stage's predicted energy** by a factor of gate_ratio (default 2.5×). This catches shared-node contamination where co-tenant workloads inflate a node's power reading without affecting wall-clock time:
+
+$$\text{reject if } \frac{z_k}{\hat{E}^{(s)}_0} > \gamma_{\text{gate}}$$
+
+Rejected readings are replaced with the prior's per-task share: $z_k \leftarrow \hat{E}^{(s)}_0 / M_s$.
+
+### Gate Performance
 
 | Scenario | Without Gate | With Gate |
 |----------|-------------|-----------|
-| Clean run (exclusive node) | 8.3% error | 8.3% error |
+| Clean run (exclusive node) | 8.3% error | 8.3% error (no false rejects) |
 | Contaminated (shared node, 2.4× inflation) | +93% error | +8% error |
+
+### Validation: Leave-One-Corpus-Out
+
+The honest test for cold prediction: train on N−1 corpora, predict the held-out corpus's whole-run total. No data leakage — the test corpus contributes only its `chars_per_doc` value.
+
+| Model | Median MRE (energy) | Median MRE (time) |
+|-------|--------------------|--------------------|
+| Per-char baseline (mean k) | 47% | 60% |
+| GBM (learned g) | 31% | 34% |
+| FT-Transformer | 308% | — |
+
+The baseline is physics (2 parameters per stage). GBM improves it. The transformer overfits catastrophically with only 4 corpora — a honest negative result that will improve with the upcoming 16-corpus sweep.
 
 ## Integration with GPT-NL Pipeline
 
