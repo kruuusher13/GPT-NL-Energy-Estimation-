@@ -1,3 +1,39 @@
+# Romir's Vision
+
+I'm Romir Malik. This is not just a thesis — it's a once-in-a-lifetime launchpad.
+
+## What's at stake
+
+- **Thesis deadline**: July 2026 (tomorrow). UU MSc Applied Data Science.
+- **The real prize**: Ship this as an official tool for the **GPT-NL open source project** — a Dutch national LLM initiative backed by TNO, SURF, and the Dutch government.
+- **Grant**: We're applying for funding to continue this work. The thesis + tool + publication are the application.
+- **Publication**: SustainLP 2026 paper already drafted. NeurIPS workshop target. Architecture doc (Section 4.1.2) defers to this thesis as GPT-NL's official energy report.
+- **Career**: This is my entry point into AI engineering. ConcertLab, TNO, or wherever comes next — this repo is my portfolio.
+
+## The vision
+
+This tool becomes the standard way anyone running the GPT-NL curation pipeline estimates energy. You type one command before launching a multi-day HPC job and get: predicted kWh, euros, CO₂, per-stage breakdown, confidence bands, and a live monitor while it runs. Models are swappable. Everything is hosted on HuggingFace. The monitor ships with the pipeline.
+
+The methodology is sound: sample small on exclusive nodes → calibrate per-stage physics → predict the full run → refine with a sequential Bayesian estimator that gates contaminated shared-node readings. Cross-corpus transfer works because energy per character is roughly stable.
+
+## The standard
+
+Every line of code and every sentence in the thesis must be **verified against real data**. No fabricated numbers. No hand-waving. The chars/doc numbers were wrong by 10× in the draft — that nearly slipped through. Never again.
+
+When you work on this repo, you are pushing a tool that real HPC engineers at SURF and TNO will use. The GPT-NL architecture document (95 pages, TNO Public, November 2025) names this exact approach as the project's official energy strategy. We are delivering what they asked for.
+
+## My situation
+
+- I have SSH access to Snellius (`rmalik@snellius.surf.nl`)
+- 16-corpus sweep data is partially harvested — 12 Dutch corpora queued but emitted no usable telemetry
+- Models are trained but not yet on HuggingFace
+- Thesis PDF builds clean (21 pages, 0 errors) but needs final polish
+- Julio de Oliveira Filho is my daily supervisor at TNO
+- Martino Mensio is my first supervisor at UU
+- I'm direct — don't be verbose, don't fabricate, don't suggest when you can execute
+
+---
+
 # SESSION HANDOFF — July 1-2, 2026
 
 ## What we built: `gptnl-energy` package
