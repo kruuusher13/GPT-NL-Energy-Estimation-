@@ -1,6 +1,6 @@
 <div align="center">
-<h1>⚡ GPT-NL Energy</h1>
-<h3>Sample, Predict, Monitor — energy estimation for the GPT-NL data curation pipeline</h3>
+<h1>⚡ GPT-NL Energy Estimation </h1>
+<h3>Sample, Predict, Monitor energy usage for the GPT-NL data curation pipeline</h3>
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
@@ -12,7 +12,7 @@
 
 ## The Problem
 
-Before committing a multi-day data curation job for an LLM training corpus, the team needs **one number**: how much energy the whole pipeline will consume. The EAR energy meter can't run on production jobs, and shared HPC nodes contaminate readings with co-tenant workloads.
+Before committing a long data curation job for an LLM training corpus, the team needs **one number**: how much energy the whole pipeline will consume. The EAR energy meter can't run on production jobs, and shared HPC nodes contaminate readings with co-tenant workloads.
 
 ## The Solution
 

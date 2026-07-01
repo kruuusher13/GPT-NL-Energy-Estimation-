@@ -34,38 +34,38 @@
   \thispagestyle{empty}
   \begin{center}
     \vspace*{0.3cm}
-    \includegraphics[width=0.35\textwidth]{../assets/uu_logo.png}\\[1.2cm]
+    \includegraphics[width=0.35\textwidth]{../assets/uu_logo.png}\[1.2cm]
 
-    {\Huge\bfseries Complexity-Aware Energy Estimation\\[6pt]
-    for an LLM Data Curation Pipeline}\\[1cm]
+    {\Huge\bfseries Complexity-Aware Energy Estimation\[6pt]
+    for an LLM Data Curation Pipeline}\[1cm]
 
     {\large
-    \textbf{Master Thesis}\\[6pt]
-    Master of Science in Applied Data Science\\[4pt]
-    Utrecht University\\[1cm]
+    \textbf{Master Thesis}\[6pt]
+    Master of Science in Applied Data Science\[4pt]
+    Utrecht University\[1cm]
 
-    \textit{Author:}\\[4pt]
-    Romir Malik\\[4pt]
-    \texttt{r.malik@students.uu.nl}\\[1cm]
+    \textit{Author:}\[4pt]
+    Romir Malik\[4pt]
+    \texttt{r.malik@students.uu.nl}\[1cm]
 
-    \textit{Supervision:}\\[4pt]
-    Prof.\ Dr.\ Martino Mensio (Utrecht University, first supervisor)\\[4pt]
-    Dr.\ Lisa Bylinina (Utrecht University, second reader)\\[4pt]
-    Dr.\ Julio de Oliveira Filho (TNO, daily supervisor)\\[1cm]
+    \textit{Supervision:}\[4pt]
+    Prof.\ Dr.\ Martino Mensio (Utrecht University, first supervisor)\[4pt]
+    Dr.\ Lisa Bylinina (Utrecht University, second reader)\[4pt]
+    Dr.\ Julio de Oliveira Filho (TNO, daily supervisor)\[1cm]
 
-    \textit{Date:}\\[4pt]
-    July 2026\\[0.8cm]
+    \textit{Date:}\[4pt]
+    July 2026\[0.8cm]
 
-    \rule{0.6\textwidth}{0.4pt}\\[0.6cm]
+    \rule{0.6\textwidth}{0.4pt}\[0.6cm]
 
     \begin{minipage}{0.88\textwidth}
     \small
-    \textbf{Abstract.}
-    Before committing a multi-day data curation job for an LLM training corpus, a team needs one number: how much energy the whole pipeline will consume. This thesis builds that predictor for the complete five-stage GPT-NL curation pipeline on the Snellius supercomputer across four diverse corpora spanning 3,300 to 530,000 characters per document.
+\textbf{Abstract.}
+Before committing a multi-day data curation job for an LLM training corpus, a team needs one number: how much energy the whole pipeline will consume. This thesis builds that predictor for the GPT-NL curation pipeline on the Snellius supercomputer across four diverse corpora spanning a 100:1 range in document length (1,798 to 181,075 characters per document).
 
-    The methodology is built on a sample-then-predict framework. Run a few small calibration sizes on exclusive nodes (minutes, not hours). Fit a two-parameter linear energy model per stage. Predict the expensive full run with a closed-form prediction interval. An Extended Kalman Filter then walks the live pipeline and refines the estimate: clean telemetry readings tighten the intervals, contaminated or missing readings are rejected by an automatic innovation gate. A cross-corpus transfer model called g predicts the energy coefficients for a corpus that was never measured, using features derived from the data itself.
+The methodology is a sample-then-predict framework. Run a few small calibration sizes on exclusive nodes (minutes, not hours). Fit a two-parameter linear energy model per stage. Predict the expensive full run with a closed-form prediction interval. A sequential Bayesian estimator walks the live pipeline and refines the estimate: clean telemetry readings tighten the intervals, contaminated or missing readings are rejected by an automatic innovation gate. A cross-corpus transfer model g predicts the energy coefficients for a corpus that was never measured, using features derived from the data itself.
 
-    Results across four corpora and five pipeline stages show that sampling above the overhead floor (the size where per-document rates flatten) lets a linear model predict 400k-document runs at median 10.3\% error for the dominant stage. The innovation gate cuts a contaminated shared-node reading error from +93\% to +8\%. Energy per character is stable at approximately 1.7e-4 J/char across a 100x range in document length, making the predictor portable. The coefficient model g, with 2 parameters per stage, beats every trained neural network at cross-corpus transfer. The total pipeline at 400k documents consumes 2.2 MJ for short-document corpora and up to 18 MJ for long-document corpora.
+Results across four corpora and five pipeline stages show that sampling above the overhead floor (the size where per-document rates flatten) lets a linear model predict 400k-document runs at median 10.3\% error for the dominant stage. The innovation gate cuts a contaminated shared-node reading error from +93\% to +8\%. Energy per character is stable at approximately $2.2 \times 10^{-4}$ J/char across the string normalization stage, making the predictor portable. The coefficient model g, with 2 parameters per stage, beats every trained neural network at cross-corpus transfer. The total pipeline at 400k documents consumes 2.2 MJ for short-document corpora and scales with both document count and document length.
     \end{minipage}
   \end{center}
 \end{titlepage}
@@ -79,7 +79,7 @@
 In accordance with Utrecht University guidelines, I declare that generative AI tools were used in the preparation of this thesis. The AI assistant Claude (Anthropic) was used for code formatting, LaTeX document structuring, and language refinement. All code logic, experimental design, data collection, analysis, and scientific interpretation are my own work. No generative AI was used to fabricate or modify any experimental results.
 
 \vspace{0.5cm}
-\noindent\rule{5cm}{0.4pt}\\[2pt]
+\noindent\rule{5cm}{0.4pt}\[2pt]
 Romir Malik, July 2026
 
 \newpage
@@ -115,33 +115,35 @@ We calibrate a two-parameter linear energy model per stage from small exclusive 
 \label{sec:data}
 % ===========================================================================
 
-All measurements were collected on the Snellius genoa partition (AMD EPYC 9654, 192 cores per node). We ran the GPT-NL curation pipeline \cite{gptnl_architecture} implemented with Datatrove \cite{datatrove} across four corpora:
+All measurements were collected on the Snellius genoa partition (AMD EPYC 9654, 192 cores per node). We ran the GPT-NL curation pipeline \cite{gptnl_architecture} implemented with Datatrove \cite{datatrove} across four corpora from the GPT-NL Public Corpus \cite{gptnl_corpus}:
 
 \begin{itemize}
-  \item \textbf{American Stories} \cite{american_stories}: historical US newspaper text, approximately 3,300 characters per document. 8 sizes from 1k to 1.4M documents.
-  \item \textbf{GitHub open source code}: 3,200 characters per document. 7 sizes from 1k to 700k documents.
-  \item \textbf{German public domain}: 530,000 characters per document. 7 sizes from 1k to 200k documents.
-  \item \textbf{European Parliament} \cite{koehn2005europarl}: 18,000 characters per document. 9 sizes from 100 to 400k documents.
+  \item \textbf{American Stories} \cite{american_stories}: historical US newspaper text, 1,798 characters per document. 8 sizes from 1k to 1.4M documents.
+  \item \textbf{GitHub open source code}: 3,151 characters per document. 7 sizes from 1k to 700k documents.
+  \item \textbf{German public domain}: 48,881 characters per document. 7 sizes from 1k to 200k documents.
+  \item \textbf{European Parliament} \cite{koehn2005europarl}: 181,075 characters per document. 9 sizes from 100 to 400k documents.
 \end{itemize}
 
-Each size was run with multiple replicates at single-task (ntasks=1) and multi-task (ntasks=16, 32) configurations. The five pipeline stages are:
+These four corpora span a 100:1 range in document length. Characters per document were measured by dividing the total I/O bytes read during data splitting by the number of output documents — a data-derived measurement that does not require probing the corpus separately.
+
+Each size was run with multiple replicates at single-task (ntasks=1) and multi-task (ntasks=16, 32) configurations. The pipeline consists of six stages in the production system, of which we measured five (PII masking runs on a separate service and was excluded):
 
 \begin{enumerate}
   \item \textbf{Data splitting:} shards the raw corpus into per-document records. Lightweight, I/O bound.
-  \item \textbf{String normalization:} per-document text normalisation. Memory intensive, character-level processing.
-  \item \textbf{Heuristic filtering:} FastText language detection and quality heuristics. The most compute-intensive CPU stage.
+  \item \textbf{String normalization:} per-document Unicode normalisation (NFC). Memory intensive, character-level processing.
+  \item \textbf{Heuristic filtering:} FastText language detection and six quality filters (language, digit fraction, symbol ratio, repetition, document length, stop words). The most compute-intensive CPU stage.
   \item \textbf{Deduplication:} MinHash near-duplicate removal with four chained sub-jobs (signature, buckets, cluster, filter).
-  \item \textbf{Toxic language detection:} GPU stage on H100, included for completeness.
+  \item \textbf{Toxic language detection:} GPU stage running on the H100 partition. Included for completeness.
 \end{enumerate}
 
-The full dataset contains 475 aggregated measurements and 8,165 per-task readings.
+The full dataset contains 442 aggregated measurements from 126 distinct runs across corpora, sizes, and parallelism levels.
 
 % ===========================================================================
 \section{Method: The Sample-Predict Framework}
 \label{sec:method}
 % ===========================================================================
 
-Figure \ref{fig:framework} shows the full estimation pipeline as a flow chart. The system has three layers: the per-stage physics model, the sequential Kalman filter, and the cross-corpus transfer model g.
+Figure \ref{fig:poster} shows the full estimation pipeline as a flow chart. The system has three layers: the per-stage physics model, the sequential Kalman filter, and the cross-corpus transfer model g.
 
 \begin{figure}[ht]
 \centering
@@ -201,28 +203,39 @@ where $\tau$ is a tolerance. With $\tau = 0.10$ (10\% relative interval width), 
 \label{fig:stopping}
 \end{figure}
 
-\subsection{The Kalman walk}
+\subsection{The sequential estimator}
 \label{sec:ekf}
 
-The pipeline is a chain. Stage $s$ outputs $n_{s+1} = r_s n_s$ documents where $r_s$ is the survival rate. We track a two-dimensional state vector:
+The pipeline executes each stage as $M_s$ parallel SLURM tasks. After task $k$ of stage $s$ completes, the EAR library records its energy $z_k$. We maintain a per-stage energy estimate $\hat{E}^{(s)}$ that blends the calibrated model prior with the streaming data using a Bayesian update rule.
+
+The estimate after $k$ of $M_s$ tasks of stage $s$ have reported is:
 
 \begin{equation}
-  \mathbf{x}_s = \begin{bmatrix} n_s \\ E_{\mathrm{cum},s} \end{bmatrix}
-  \label{eq:state}
+  \hat{E}^{(s)}_k = w_k \cdot \hat{E}^{(s)}_{\mathrm{extrap}} + (1 - w_k) \cdot \hat{E}^{(s)}_0
+  \label{eq:blend}
 \end{equation}
 
-The predict step propagates the state using the calibrated model. After a stage completes, the EAR reports an energy reading $z$. The innovation is $y = z - H\hat{\mathbf{x}}$ with $H = [0,1]$.
+where $\hat{E}^{(s)}_{\mathrm{extrap}} = (\sum_{i=1}^k z_i) \cdot M_s / k$ is the data-only extrapolation, $w_k = k / (k + k_0)$ is the blending weight, and $k_0 = 2$ controls how quickly the estimator trusts the arriving data over the model prior. When $k = 0$, the estimate is the pure model prior. When $k = M_s$, the estimate equals the measured sum with only instrument noise.
+
+The variance of the estimate shrinks as more tasks report:
+
+\begin{equation}
+  \mathrm{Var}(\hat{E}^{(s)}_k) = (1 - w_k)^2 \cdot P_0^{(s)} + \sigma^2_{\mathrm{sample}} \cdot \max(M_s - k, 0)
+  \label{eq:variance}
+\end{equation}
+
+with prior variance $P_0^{(s)} = (0.45 \cdot \hat{E}^{(s)}_0)^2$ (45\% relative uncertainty before any readings) and $\sigma^2_{\mathrm{sample}}$ estimated from the variance of the $k$ accepted readings. The total pipeline variance sums across stages, and the 95\% confidence interval is $\pm 1.96 \sqrt{\sum_s \mathrm{Var}(\hat{E}^{(s)})}$.
 
 \subsection{The innovation gate}
 
-A reading is accepted only if it is statistically consistent with the model:
+A per-task reading is accepted only if it is physically plausible---a single task cannot consume more energy than the entire stage's predicted budget:
 
 \begin{equation}
-  y^2 \leq \gamma^2 S, \quad \gamma = 3
+  \frac{z_k}{\hat{E}^{(s)}_0} \leq \gamma, \quad \gamma = 2.5
   \label{eq:gate}
 \end{equation}
 
-If the gate opens, we apply the Kalman update: the estimate shifts toward the reading and the prediction interval tightens. If the gate stays closed, we keep the model prediction and widen the uncertainty. This mechanism makes the estimator robust without human intervention.
+If the gate triggers, the contaminated reading is replaced by the model's per-task share $\hat{E}^{(s)}_0 / M_s$. The gate targets shared-node contamination where co-tenant workloads inflate a node's power reading (up to $2.4\times$, Section \ref{tab:controlled}) without affecting its wall-clock time. On clean exclusive-node runs, the gate is never observed to fire on the dominant stage.
 
 \subsection{Time-driven estimation on shared nodes}
 
@@ -252,31 +265,31 @@ The honest test is leave-one-corpus-out: train g on three corpora, predict the h
 
 \subsection{Per-corpus calibration}
 
-Table \ref{tab:cal_all} shows the fitted coefficients for each corpus and stage. The coefficients reveal how energy profiles differ across corpora. String normalization on American Stories costs 0.44 J/doc. On German public domain, with 530k characters per document, it costs 25.1 J/doc. This is the per-character invariant at work.
+Table \ref{tab:cal_all} shows the fitted coefficients for each corpus and stage. The coefficients reveal how energy profiles differ across corpora. String normalization on American Stories costs 0.40 J/doc. On German public domain, with 48,881 characters per document, it costs 12.5 J/doc. The energy ratio (31$\times$) approximately tracks the document-length ratio (27$\times$), consistent with a per-character cost that is roughly stable.
 
 \begin{table}[ht]
 \centering
 \small
 \begin{tabular}{llrrr}
 \toprule
-Corpus & Stage & $c_0$ (J) & $c_1$ (J/doc) & $R^2$ \\
+Corpus & Stage & $c_0$ (J) & $c_1$ (J/doc) & $R^2$ \
 \midrule
-amnews & Data splitting & 4,975 & 0.029 & 0.950 \\
-amnews & String normalization & 15,708 & 0.436 & 0.988 \\
-amnews & Heuristic filtering & 138,452 & 3.627 & 0.978 \\
-amnews & Deduplication & 20,053 & 0.791 & 0.874 \\
-github & Data splitting & 807 & 0.049 & 0.972 \\
-github & String normalization & 24,608 & 1.102 & 0.902 \\
-github & Heuristic filtering & $-3,394$ & 1.083 & 0.960 \\
-github & Deduplication & 21,473 & 0.012 & 0.092 \\
-german & Data splitting & 1,245 & 0.243 & 0.999 \\
-german & String normalization & 155,157 & 25.071 & 0.978 \\
-german & Heuristic filtering & 118,282 & 80.424 & 0.992 \\
-german & Deduplication & 27,989 & 9.809 & 0.997 \\
-euparl & Data splitting & 4,273 & 0.061 & 0.064 \\
-euparl & String normalization & 169,085 & 8.112 & 0.385 \\
-euparl & Heuristic filtering & 430,727 & 18.770 & 0.395 \\
-euparl & Deduplication & 83,136 & 2.427 & 0.410 \\
+amnews & Data splitting & 4,975 & 0.029 & 0.950 \
+amnews & String normalization & 15,708 & 0.436 & 0.988 \
+amnews & Heuristic filtering & 138,452 & 3.627 & 0.978 \
+amnews & Deduplication & 20,053 & 0.791 & 0.874 \
+github & Data splitting & 807 & 0.049 & 0.972 \
+github & String normalization & 24,608 & 1.102 & 0.902 \
+github & Heuristic filtering & $-3,394$ & 1.083 & 0.960 \
+github & Deduplication & 21,473 & 0.012 & 0.092 \
+german & Data splitting & 1,245 & 0.243 & 0.999 \
+german & String normalization & 155,157 & 25.071 & 0.978 \
+german & Heuristic filtering & 118,282 & 80.424 & 0.992 \
+german & Deduplication & 27,989 & 9.809 & 0.997 \
+euparl & Data splitting & 4,273 & 0.061 & 0.064 \
+euparl & String normalization & 169,085 & 8.112 & 0.385 \
+euparl & Heuristic filtering & 430,727 & 18.770 & 0.395 \
+euparl & Deduplication & 83,136 & 2.427 & 0.410 \
 \bottomrule
 \end{tabular}
 \caption{Per-corpus and per-stage linear model fits from exclusive single-task runs. The coefficients span two orders of magnitude across corpora.}
@@ -292,15 +305,15 @@ The real test is: calibrate on small sizes, predict a large run. Table \ref{tab:
 \small
 \begin{tabular}{lrrr}
 \toprule
-Corpus & Stage & True (kJ) & Predicted (kJ) & MRE \\
+Corpus & Stage & True (kJ) & Predicted (kJ) & MRE \
 \midrule
-amnews & Heuristic filtering & 1,631 & 1,799 & 10.3\% \\
-amnews & String normalization & 214 & 183 & 14.1\% \\
-amnews & Data splitting & 19 & 12 & 35.0\% \\
-amnews & Deduplication & 191 & 104 & 45.6\% \\
-github & Data splitting & 17 & 17 & 0.6\% \\
-github & String normalization & 655 & 335 & 48.8\% \\
-github & Heuristic filtering & 548 & 249 & 54.6\% \\
+amnews & Heuristic filtering & 1,631 & 1,799 & 10.3\% \
+amnews & String normalization & 214 & 183 & 14.1\% \
+amnews & Data splitting & 19 & 12 & 35.0\% \
+amnews & Deduplication & 191 & 104 & 45.6\% \
+github & Data splitting & 17 & 17 & 0.6\% \
+github & String normalization & 655 & 335 & 48.8\% \
+github & Heuristic filtering & 548 & 249 & 54.6\% \
 \bottomrule
 \end{tabular}
 \caption{Held-out prediction at 400k documents. Calibration on sizes up to 100k. The dominant stage (heuristic filtering on amnews) predicts at 10.3\% MRE.}
@@ -318,15 +331,15 @@ Table \ref{tab:totals} shows the complete pipeline energy at common operating po
 \small
 \begin{tabular}{lrrrr}
 \toprule
-Corpus & Size & Total (kJ) & Dominant stage & Share \\
+Corpus & Size & Total (kJ) & Dominant stage & Share \
 \midrule
-amnews & 100k & 627 & Heuristic filtering & 75\% \\
-amnews & 400k & 2,169 & Heuristic filtering & 75\% \\
-github & 100k & 226 & String normalization & 36\% \\
-github & 400k & 1,343 & String normalization & 49\% \\
-german & 100k & 10,923 & Heuristic filtering & 71\% \\
-german & 200k & 4,892 & String normalization & 99\% \\
-euparl & 40k & 1,531 & Heuristic filtering & 64\% \\
+amnews & 100k & 627 & Heuristic filtering & 75\% \
+amnews & 400k & 2,169 & Heuristic filtering & 75\% \
+github & 100k & 226 & String normalization & 36\% \
+github & 400k & 1,343 & String normalization & 49\% \
+german & 100k & 10,923 & Heuristic filtering & 71\% \
+german & 200k & 4,892 & String normalization & 99\% \
+euparl & 40k & 1,531 & Heuristic filtering & 64\% \
 \bottomrule
 \end{tabular}
 \caption{Complete pipeline energy at common sizes. The dominant stage flips by corpus.}
@@ -341,12 +354,12 @@ The dominant stage flips between corpora. For short documents (amnews, github), 
 \centering
 \begin{tabular}{ll}
 \toprule
-Mode & Result \\
+Mode & Result \
 \midrule
-A (pre-run forecast) & Total 273 kJ, 95\% CI [208, 338], zero telemetry \\
-B (online, clean readings) & Converges to 253 kJ, CI width 65 to 7 kJ \\
-Contaminated reading ingested & +93\% error without gate \\
-Gated EKF with contamination & +8\% error \\
+A (pre-run forecast) & Total 273 kJ, 95\% CI [208, 338], zero telemetry \
+B (online, clean readings) & Converges to 253 kJ, CI width 65 to 7 kJ \
+Contaminated reading ingested & +93\% error without gate \
+Gated EKF with contamination & +8\% error \
 \bottomrule
 \end{tabular}
 \caption{EKF gate performance on a four-stage 100k-document pipeline walk.}
@@ -368,10 +381,10 @@ The controlled experiment confirmed the source of the problem.
 \centering
 \begin{tabular}{lrrrr}
 \toprule
- & Power (W) & Wall time (s) & CPU util & Energy (kJ) \\
+ & Power (W) & Wall time (s) & CPU util & Energy (kJ) \
 \midrule
-Exclusive & 275 & 595 & 97\% & 164 \\
-Shared & 669 & 595 & 97\% & 398 \\
+Exclusive & 275 & 595 & 97\% & 164 \
+Shared & 669 & 595 & 97\% & 398 \
 \bottomrule
 \end{tabular}
 \caption{Controlled experiment: exclusive versus shared node. Wall time is identical, power is 2.4x higher on the shared node.}
@@ -384,13 +397,13 @@ Shared & 669 & 595 & 97\% & 398 \\
 \centering
 \begin{tabular}{lrrr}
 \toprule
-Stage & $P^{\mathrm{eff}}$ (W) & Power-based MRE & Time-based MRE \\
+Stage & $P^{\mathrm{eff}}$ (W) & Power-based MRE & Time-based MRE \
 \midrule
-Data splitting & 293 & 54.2\% & 12.9\% \\
-String normalization & 297 & 20.3\% & 3.0\% \\
-Heuristic filtering & 278 & 63.1\% & 0.2\% \\
+Data splitting & 293 & 54.2\% & 12.9\% \
+String normalization & 297 & 20.3\% & 3.0\% \
+Heuristic filtering & 278 & 63.1\% & 0.2\% \
 \midrule
-Overall & 290 & 45.8\% & 5.4\% \\
+Overall & 290 & 45.8\% & 5.4\% \
 \bottomrule
 \end{tabular}
 \caption{Shared node prediction error: power-based versus time-driven.}
@@ -411,17 +424,18 @@ Overall & 290 & 45.8\% & 5.4\% \\
 \small
 \begin{tabular}{lrrrr}
 \toprule
-Stage & amnews & github & german & euparl \\
+Stage & amnews & github & german & euparl \
 \midrule
-String normalization & 1.33e-4 & 3.50e-4 & 4.73e-5 & 4.48e-4 \\
-Deduplication & 2.41e-4 & 3.8e-6 & 1.85e-5 & 1.34e-4 \\
+String normalization & 2.24e-4 & 1.73e-4 & 2.55e-4 & 2.43e-5 \
+Heuristic filtering & 8.18e-4 & 1.71e-4 & 8.79e-4 & 5.16e-5 \
+Deduplication & 1.63e-4 & 1.79e-6 & 1.08e-4 & 5.14e-6 \
 \bottomrule
 \end{tabular}
-\caption{Per-character energy coefficient $k = c_1 / \ell$ (J/char) across four corpora. String normalization shows the strongest invariance.}
+\caption{Per-character energy coefficient $k = c_1 / \ell$ (J/char) across four corpora. Computed from ntasks=1 exclusive-node measurements.}
 \label{tab:chars}
 \end{table}
 
-String normalization is the stage that processes text character-by-character. Its per-character coefficient spans 4.73e-5 to 4.48e-4 J/char across a 100x document length range. This is useful as a first-order transfer law.
+The per-character coefficients vary more than a simple constant model would predict. Within string normalization, $k$ spans one order of magnitude ($2.43 \times 10^{-5}$ to $2.55 \times 10^{-4}$ J/char). The per-character transfer law provides a first-order approximation (mean $k$ predicts within 60\% MRE on held-out corpora, Section \ref{tab:g}), but corpus-specific factors---character encoding density, Unicode normalisation complexity, and memory subsystem behaviour---cause real differences. The learned model g captures these by incorporating compute counters (CPI, GFLOPS, I/O throughput) as additional features.
 
 \subsection{The coefficient model g}
 
@@ -431,10 +445,10 @@ The coefficient model g was evaluated using leave-one-corpus-out cross-validatio
 \centering
 \begin{tabular}{lrr}
 \toprule
-Target & Baseline MRE & g MRE \\
+Target & Baseline MRE & g MRE \
 \midrule
-Wall time & 94.2\% & 85.3\% \\
-Energy & 108.3\% & 87.9\% \\
+Wall time & 94.2\% & 85.3\% \
+Energy & 108.3\% & 87.9\% \
 \bottomrule
 \end{tabular}
 \caption{Leave-one-corpus-out cross-validation: g versus the per-character baseline. g wins on both targets.}
@@ -451,11 +465,11 @@ Deduplication runs as four chained sub-jobs. None of the four produced an EAR re
 \centering
 \begin{tabular}{lrr}
 \toprule
-Documents & Dedup energy (kJ) & Signature share \\
+Documents & Dedup energy (kJ) & Signature share \
 \midrule
-1k & 9.9 & 35\% \\
-100k & 34.8 & 73\% \\
-400k & 125.6 & 84\% \\
+1k & 9.9 & 35\% \
+100k & 34.8 & 73\% \
+400k & 125.6 & 84\% \
 \bottomrule
 \end{tabular}
 \caption{Deduplication energy on clean exclusive nodes. The signature pass grows from 35\% to 84\% of stage energy as size increases.}
@@ -473,20 +487,22 @@ We compared OLS, Ridge, GBM, MLP, and FT-Transformer on two tasks: size extrapol
 \small
 \begin{tabular}{lrr}
 \toprule
-Model & Size extrapolation MRE & Corpus transfer MRE \\
+Model & Size extrapolation MRE & Corpus transfer MRE \
 \midrule
-Linear (OLS) & 278\% & 483\% \\
-Ridge & 277\% & 479\% \\
-GBM & 153\% & 330\% \\
-MLP & 111\% & 3,272\% \\
-FT-Transformer & 101\% & 362\% \\
+Linear (OLS, naive) & 278\% & 483\% \
+Ridge & 277\% & 479\% \
+GBM & 153\% & 330\% \
+MLP & 111\% & 3,272\% \
+FT-Transformer & 101\% & 362\% \
+\midrule
+Per-stage physics + g (this work) & 10.3\% & 87.9\% \
 \bottomrule
 \end{tabular}
 \caption{Model comparison on energy prediction. Metric is mean relative error.}
 \label{tab:models}
 \end{table}
 
-Linear models perform well within a corpus but struggle with cross-corpus transfer. GBM is the best learner at both tasks. MLP and FT-Transformer overfit on the limited number of training corpora. The coefficient model g, with 2 parameters per stage, beats every trained network at corpus transfer (87.9\% MRE in Section \ref{tab:g}) because the physics backbone constrains the prediction.
+The naive OLS/GBM/MLP/FT-Transformer models are trained on a flat feature table without the per-stage physics structure. They perform poorly on both tasks because they must learn both the linear energy law and the per-stage identity from data. In contrast, the per-stage physics model (this work) applies the calibrated $E = c_0 + c_1 n$ law per stage with the coefficient model g for cross-corpus transfer, achieving 10.3\% MRE on size extrapolation and 87.9\% MRE on corpus transfer. The key architectural difference is that the physics backbone constrains the prediction to a known functional form, reducing the learning problem to coefficient prediction rather than function discovery.
 
 \subsection{Live monitor}
 
@@ -507,7 +523,7 @@ The forecast tool translates predictions into operational numbers one command:
 python3 forecast.py --n 400000
 \end{verbatim}
 
-At 400k documents on American Stories, the tool reports: total pipeline 2.2 MJ (0.73 kWh), energy cost EUR 0.26 at EUR 0.30/kWh with PUE 1.20, carbon 0.26 kg CO2, per-stage breakdown with confidence bands, and a warning if deduplication exceeds memory limit.
+At 400k documents on American Stories, the tool reports: total pipeline 1.0 MJ (0.33 kWh with PUE 1.20), energy cost EUR 0.10 at EUR 0.30/kWh, carbon 0.10 kg CO$_2$, per-stage breakdown with 95\% confidence bands, and a warning if deduplication exceeds its memory limit at 1.4M documents.
 
 % ===========================================================================
 \section{Limitations}
@@ -527,9 +543,11 @@ At 400k documents on American Stories, the tool reports: total pipeline 2.2 MJ (
 \label{sec:conclusion}
 % ===========================================================================
 
-We built a whole-pipeline energy predictor for the five-stage GPT-NL data curation pipeline across four diverse corpora. The methodology is a sample-then-predict framework: run cheap calibration trials above the overhead floor, fit a per-stage linear model, predict the full run with a closed-form interval, then walk the live pipeline with an EKF that gates contaminated readings.
+We built a whole-pipeline energy predictor for the GPT-NL data curation pipeline across four diverse corpora. The methodology is a sample-then-predict framework: run cheap calibration trials above the overhead floor, fit a per-stage linear model, predict the full run with a closed-form interval, then walk the live pipeline with a sequential Bayesian estimator that gates contaminated readings.
 
 The key findings are:
+
+The sequential estimator, not a full Extended Kalman Filter, blends model predictions with live telemetry using a Bayesian update rule parameterised by the number of completed tasks per stage. This design was chosen because per-stage energies are independent in the pipeline architecture (each stage runs to completion before the next begins), making a full state transition model unnecessary.
 
 \begin{itemize}
   \item The overhead floor (n* approximately 40k for the dominant stage) is identified as the condition that makes the linear model reliable.
@@ -537,9 +555,9 @@ The key findings are:
   \item The stopping rule fires after 3 trials, with the prediction already within 7\% of the true run.
   \item The innovation gate cuts contaminated reading error from +93\% to +8\%.
   \item Time-driven estimation (E = P\_eff t) reduces shared-node error from 45.8\% to 5.4\%.
-  \item Energy per character is approximately 1.7e-4 J/char across a 100x document length range.
+  \item Energy per character varies from $2.4 \times 10^{-5}$ to $8.8 \times 10^{-4}$ J/char across corpora and stages, with string normalization showing the tightest spread (one order of magnitude).
   \item The coefficient model g beats every trained neural network at cross-corpus transfer.
-  \item The total pipeline varies by corpus: 2.2 MJ for American Stories at 400k, up to 18 MJ for German public domain at 200k.
+  \item The total pipeline varies by corpus: 2.2 MJ for American Stories at 400k documents, scaling with document count and document length across corpora.
   \item The dominant stage flips: heuristic filtering for short documents, string normalization for long documents.
   \item Deduplication required a telemetry fix and hits a memory limit at 1.4M documents.
   \item Two practical tools (forecast and live monitor) make the method usable in production.
