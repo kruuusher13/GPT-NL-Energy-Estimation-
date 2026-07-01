@@ -1,0 +1,15 @@
+% Minimal packages for the paper — no algorithm2e, no tabularray
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath, amsfonts}
+% nicefrac not available in basic TeX — use \nicefrac replacement if needed
+
+% Custom footnote symbols
+\makeatletter
+\newcommand{\ssymbol}[1]{\@fnsymbol{#1}}
+\newcommand{\romanNumeral}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother

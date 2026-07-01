@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gptnl-energy"
+version = "0.1.0"
+description = "Energy estimation and live monitoring for the GPT-NL data curation pipeline"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [{name = "Romir Malik", email = "r.malik@students.uu.nl"}]
+requires-python = ">=3.10,<3.13"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = ["energy", "hpc", "llm", "data-curation", "carbon-footprint", "gpt-nl"]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "rich>=13.0",
+    "plotext>=5.0",
+    "huggingface_hub>=0.20",
+    "click>=8.0",
+]
+
+[project.optional-dependencies]
+torch = ["torch>=2.0"]
+all = ["gptnl-energy[torch]"]
+
+[project.scripts]
+gptnl-energy = "gptnl_energy.cli.main:main"
+
+[project.urls]
+Homepage = "https://github.com/GPT-NL/gptnl-energy"
+Repository = "https://github.com/GPT-NL/gptnl-energy"
+Issues = "https://github.com/GPT-NL/gptnl-energy/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gptnl_energy"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM"]
+ignore = ["E501"]
