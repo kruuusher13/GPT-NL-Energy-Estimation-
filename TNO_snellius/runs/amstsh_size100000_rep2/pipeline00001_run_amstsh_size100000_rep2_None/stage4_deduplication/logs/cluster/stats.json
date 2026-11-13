@@ -1,0 +1,18 @@
+[
+    {
+        "name": "\ud83e\udec2 - DEDUP: \ud83c\udfaf MinHash stage 3",
+        "time_stats": {
+            "total": 0.08592093910556287,
+            "mean": 0.08592093910556287,
+            "total_human": "0.09 seconds",
+            "mean_human": "85.92 milliseconds",
+            "std_dev_human": "0 milliseconds",
+            "min_human": "85.92 milliseconds",
+            "max_human": "85.92 milliseconds"
+        },
+        "stats": {
+            "duplicates": 1408,
+            "to_remove": 1142
+        }
+    }
+]

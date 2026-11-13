@@ -1,0 +1,89 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 6.4824566640891135,
+            "n": 129,
+            "mean": 0.05025160204720243,
+            "variance": 0.00010401530331321362,
+            "std_dev": 0.010198789306246778,
+            "min": 0.012247167993336916,
+            "max": 0.07861939095892012,
+            "unit": "batch",
+            "total_human": "6.48 seconds",
+            "mean_human": "50.25 milliseconds",
+            "std_dev_human": "10.20 milliseconds",
+            "min_human": "12.25 milliseconds",
+            "max_human": "78.62 milliseconds"
+        },
+        "stats": {
+            "input_files": 1,
+            "doc_len": {
+                "total": 176806852,
+                "n": 128271,
+                "mean": 1378.3852312681847,
+                "variance": 2703318.6029015663,
+                "std_dev": 1644.177181115699,
+                "min": 62,
+                "max": 11924
+            },
+            "documents": {
+                "total": 128270,
+                "mean": 128270.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83e\udec2 - DEDUP: \ud83c\udfaf MinHash stage 4",
+        "time_stats": {
+            "total": 0.627280259388499,
+            "n": 128271,
+            "mean": 4.890273400757013e-06,
+            "variance": 5.39121523037556e-09,
+            "std_dev": 7.34248951676171e-05,
+            "min": 1.920037902891636e-06,
+            "max": 0.018116599996574223,
+            "total_human": "0.63 seconds",
+            "mean_human": "0.01 milliseconds",
+            "std_dev_human": "0.07 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "18.12 milliseconds"
+        },
+        "stats": {
+            "total": 128271,
+            "forwarded": 126155,
+            "dropped": 2116
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 27.696707050781697,
+            "n": 126155,
+            "mean": 0.000219545060051376,
+            "variance": 0.0007924892446155023,
+            "std_dev": 0.02815118549218669,
+            "min": 9.051302913576365e-05,
+            "max": 9.819084145012312,
+            "total_human": "27.70 seconds",
+            "mean_human": "0.22 milliseconds",
+            "std_dev_human": "28.15 milliseconds",
+            "min_human": "0.09 milliseconds",
+            "max_human": "9 seconds and 819.08 milliseconds"
+        },
+        "stats": {
+            "XXXXX.parquet": 126155,
+            "total": 126155,
+            "doc_len": {
+                "total": 175228073,
+                "n": 126155,
+                "mean": 1388.9903135032132,
+                "variance": 2730280.5827176874,
+                "std_dev": 1652.3560701972463,
+                "min": 62,
+                "max": 11924
+            }
+        }
+    }
+]

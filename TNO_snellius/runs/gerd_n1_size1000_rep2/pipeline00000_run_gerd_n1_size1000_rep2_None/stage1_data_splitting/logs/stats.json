@@ -1,0 +1,67 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 0.19944398920051754,
+            "n": 2,
+            "mean": 0.09972199460025877,
+            "variance": 0.000424663080934922,
+            "std_dev": 0.02060735502035431,
+            "min": 0.08515039412304759,
+            "max": 0.11429359507746994,
+            "unit": "batch",
+            "total_human": "0.20 seconds",
+            "mean_human": "99.72 milliseconds",
+            "std_dev_human": "20.61 milliseconds",
+            "min_human": "85.15 milliseconds",
+            "max_human": "114.29 milliseconds"
+        },
+        "stats": {
+            "input_files": 1,
+            "doc_len": {
+                "total": 47570657,
+                "n": 1000,
+                "mean": 47570.657000000094,
+                "variance": 50975116.77012109,
+                "std_dev": 7139.686041425147,
+                "min": 554,
+                "max": 64498
+            },
+            "documents": {
+                "total": 1000,
+                "mean": 1000.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 1.062376230256632,
+            "n": 1000,
+            "mean": 0.0010623762302566318,
+            "variance": 0.0007520791167167821,
+            "std_dev": 0.027424060908566805,
+            "min": 3.523100167512894e-05,
+            "max": 0.8498440079856664,
+            "total_human": "1.06 seconds",
+            "mean_human": "1.06 milliseconds",
+            "std_dev_human": "27.42 milliseconds",
+            "min_human": "0.04 milliseconds",
+            "max_human": "849.84 milliseconds"
+        },
+        "stats": {
+            "XXXXX.parquet": 1000,
+            "total": 1000,
+            "doc_len": {
+                "total": 47570657,
+                "n": 1000,
+                "mean": 47570.657000000094,
+                "variance": 50975116.77012109,
+                "std_dev": 7139.686041425147,
+                "min": 554,
+                "max": 64498
+            }
+        }
+    }
+]

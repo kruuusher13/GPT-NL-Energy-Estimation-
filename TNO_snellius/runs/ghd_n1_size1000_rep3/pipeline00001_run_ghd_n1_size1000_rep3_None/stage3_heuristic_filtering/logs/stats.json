@@ -1,0 +1,128 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 0.020176221965812147,
+            "mean": 0.020176221965812147,
+            "unit": "batch",
+            "total_human": "0.02 seconds",
+            "mean_human": "20.18 milliseconds",
+            "std_dev_human": "0 milliseconds",
+            "min_human": "20.18 milliseconds",
+            "max_human": "20.18 milliseconds"
+        },
+        "stats": {
+            "input_files": 1,
+            "doc_len": {
+                "total": 4094389,
+                "n": 1000,
+                "mean": 4094.388999999999,
+                "variance": 181534270.0557347,
+                "std_dev": 13473.465406336067,
+                "min": 21,
+                "max": 218052
+            },
+            "documents": {
+                "total": 999,
+                "mean": 999.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83d\udd3b - FILTER: \ud83c\udf0d Language ID",
+        "time_stats": {
+            "total": 0.9415168373379856,
+            "n": 1000,
+            "mean": 0.0009415168373379867,
+            "variance": 4.470825326182726e-05,
+            "std_dev": 0.006686423054356287,
+            "min": 0.0001101040979847312,
+            "max": 0.20482778293080628,
+            "total_human": "0.94 seconds",
+            "mean_human": "0.94 milliseconds",
+            "std_dev_human": "6.69 milliseconds",
+            "min_human": "0.11 milliseconds",
+            "max_human": "204.83 milliseconds"
+        },
+        "stats": {
+            "total": 1000,
+            "dropped": 957,
+            "forwarded": 43,
+            "doc_len": {
+                "total": 86435,
+                "n": 43,
+                "mean": 2010.1162790697672,
+                "variance": 10176706.914728682,
+                "std_dev": 3190.0951262820804,
+                "min": 51,
+                "max": 18081
+            }
+        }
+    },
+    {
+        "name": "\ud83d\udd3b - FILTER: \u2744\ufe0f NordicPile Quality",
+        "time_stats": {
+            "total": 0.26649419451132417,
+            "n": 43,
+            "mean": 0.006197539407240096,
+            "variance": 0.0004124643980262352,
+            "std_dev": 0.020309219532671244,
+            "min": 0.00025818904396146536,
+            "max": 0.13356033200398088,
+            "total_human": "0.27 seconds",
+            "mean_human": "6.20 milliseconds",
+            "std_dev_human": "20.31 milliseconds",
+            "min_human": "0.26 milliseconds",
+            "max_human": "133.56 milliseconds"
+        },
+        "stats": {
+            "total": 43,
+            "forwarded": 42,
+            "doc_len": {
+                "total": 86384,
+                "n": 42,
+                "mean": 2056.7619047619046,
+                "variance": 10329077.307781648,
+                "std_dev": 3213.8881915495517,
+                "min": 107,
+                "max": 18081
+            },
+            "dropped": 1,
+            "dropped_nordicpile_short_doc": 1
+        }
+    },
+    {
+        "name": "\ud83d\udd3b - FILTER: \ud83e\udd47 Gopher Quality",
+        "time_stats": {
+            "total": 0.11237249977421016,
+            "n": 42,
+            "mean": 0.0026755357089097665,
+            "variance": 5.758455589945313e-06,
+            "std_dev": 0.002399678226334796,
+            "min": 0.0007762380409985781,
+            "max": 0.012893331935629249,
+            "total_human": "0.11 seconds",
+            "mean_human": "2.68 milliseconds",
+            "std_dev_human": "2.40 milliseconds",
+            "min_human": "0.78 milliseconds",
+            "max_human": "12.89 milliseconds"
+        },
+        "stats": {
+            "total": 42,
+            "dropped": 42,
+            "dropped_gopher_below_alpha_threshold": 40,
+            "dropped_gopher_too_many_hashes": 2
+        }
+    },
+    {
+        "name": "\ud83d\udd3b - FILTER: \ud83d\udc6f Gopher Repetition",
+        "time_stats": 0,
+        "stats": {}
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": 0,
+        "stats": {}
+    }
+]

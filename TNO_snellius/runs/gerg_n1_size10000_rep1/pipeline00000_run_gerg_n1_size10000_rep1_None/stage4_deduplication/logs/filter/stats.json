@@ -1,0 +1,75 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 0.4340785061940551,
+            "n": 5,
+            "mean": 0.08681570123881102,
+            "variance": 0.0022167043380298757,
+            "std_dev": 0.047081889703259314,
+            "min": 0.00452993088401854,
+            "max": 0.12477071909233928,
+            "unit": "batch",
+            "total_human": "0.43 seconds",
+            "mean_human": "86.82 milliseconds",
+            "std_dev_human": "47.08 milliseconds",
+            "min_human": "4.53 milliseconds",
+            "max_human": "124.77 milliseconds"
+        },
+        "stats": {
+            "input_files": 1,
+            "doc_len": {
+                "total": 193576987,
+                "n": 4041,
+                "mean": 47903.23855481312,
+                "variance": 34697628.19703796,
+                "std_dev": 5890.469267981793,
+                "min": 1815,
+                "max": 63142
+            },
+            "documents": {
+                "total": 4040,
+                "mean": 4040.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83e\udec2 - DEDUP: \ud83c\udfaf MinHash stage 4",
+        "time_stats": 0,
+        "stats": {
+            "total": 4041,
+            "forwarded": 4041
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 1.1399659351445735,
+            "n": 4041,
+            "mean": 0.0002820999592042995,
+            "variance": 2.676639174021319e-05,
+            "std_dev": 0.005173624623048447,
+            "min": 8.994294330477715e-05,
+            "max": 0.22751740110106766,
+            "total_human": "1.14 seconds",
+            "mean_human": "0.28 milliseconds",
+            "std_dev_human": "5.17 milliseconds",
+            "min_human": "0.09 milliseconds",
+            "max_human": "227.52 milliseconds"
+        },
+        "stats": {
+            "XXXXX.parquet": 4041,
+            "total": 4041,
+            "doc_len": {
+                "total": 193576987,
+                "n": 4041,
+                "mean": 47903.23855481312,
+                "variance": 34697628.19703796,
+                "std_dev": 5890.469267981793,
+                "min": 1815,
+                "max": 63142
+            }
+        }
+    }
+]

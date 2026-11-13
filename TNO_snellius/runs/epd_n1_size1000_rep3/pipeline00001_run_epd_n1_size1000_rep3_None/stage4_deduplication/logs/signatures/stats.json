@@ -1,0 +1,47 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 0.3183523699408397,
+            "mean": 0.3183523699408397,
+            "unit": "batch",
+            "total_human": "0.32 seconds",
+            "mean_human": "318.35 milliseconds",
+            "std_dev_human": "0 milliseconds",
+            "min_human": "318.35 milliseconds",
+            "max_human": "318.35 milliseconds"
+        },
+        "stats": {
+            "input_files": 1,
+            "doc_len": {
+                "total": 149065281,
+                "n": 392,
+                "mean": 380268.573979592,
+                "variance": 42617310309.66203,
+                "std_dev": 206439.60450858754,
+                "min": 3913,
+                "max": 875157
+            },
+            "documents": {
+                "total": 391,
+                "mean": 391.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83e\udec2 - DEDUP: \ud83c\udfaf MinHash stage 1",
+        "time_stats": {
+            "total": 134.01873599202372,
+            "mean": 134.01873599202372,
+            "total_human": "2 minutes and 14.02 seconds",
+            "mean_human": "2 minutes, 14 seconds and 18.74 milliseconds",
+            "std_dev_human": "0 milliseconds",
+            "min_human": "2 minutes, 14 seconds and 18.74 milliseconds",
+            "max_human": "2 minutes, 14 seconds and 18.74 milliseconds"
+        },
+        "stats": {
+            "total": 392
+        }
+    }
+]

@@ -1,0 +1,123 @@
+[
+  {
+    "model": "LINEAR",
+    "file": "models/linear_time.joblib",
+    "type": "sklearn",
+    "target": "time",
+    "params": "-",
+    "accuracy": {
+      "size-extrapolation": 435.6,
+      "corpus-transfer": 778.6
+    }
+  },
+  {
+    "model": "RIDGE",
+    "file": "models/ridge_time.joblib",
+    "type": "sklearn",
+    "target": "time",
+    "params": "-",
+    "accuracy": {
+      "size-extrapolation": 433.6,
+      "corpus-transfer": 773.0
+    }
+  },
+  {
+    "model": "GBM",
+    "file": "models/gbm_time.joblib",
+    "type": "sklearn",
+    "target": "time",
+    "params": "-",
+    "accuracy": {
+      "size-extrapolation": 155.1,
+      "corpus-transfer": 245.1
+    }
+  },
+  {
+    "model": "MLP",
+    "file": "models/mlp_time.joblib",
+    "type": "sklearn",
+    "target": "time",
+    "params": "-",
+    "accuracy": {
+      "size-extrapolation": 52.7,
+      "corpus-transfer": 669.3
+    }
+  },
+  {
+    "model": "FT-Transformer",
+    "file": "models/ftt_time.pt",
+    "type": "torch",
+    "target": "time",
+    "params": 17569,
+    "accuracy": {
+      "size-extrapolation": 33.7,
+      "corpus-transfer": 380.8
+    }
+  },
+  {
+    "model": "LINEAR",
+    "file": "models/linear_energy.joblib",
+    "type": "sklearn",
+    "target": "energy",
+    "params": "-",
+    "accuracy": {
+      "size-extrapolation": 278.2,
+      "corpus-transfer": 482.9
+    }
+  },
+  {
+    "model": "RIDGE",
+    "file": "models/ridge_energy.joblib",
+    "type": "sklearn",
+    "target": "energy",
+    "params": "-",
+    "accuracy": {
+      "size-extrapolation": 277.1,
+      "corpus-transfer": 479.2
+    }
+  },
+  {
+    "model": "GBM",
+    "file": "models/gbm_energy.joblib",
+    "type": "sklearn",
+    "target": "energy",
+    "params": "-",
+    "accuracy": {
+      "size-extrapolation": 153.0,
+      "corpus-transfer": 330.1
+    }
+  },
+  {
+    "model": "MLP",
+    "file": "models/mlp_energy.joblib",
+    "type": "sklearn",
+    "target": "energy",
+    "params": "-",
+    "accuracy": {
+      "size-extrapolation": 110.9,
+      "corpus-transfer": 3271.8
+    }
+  },
+  {
+    "model": "FT-Transformer",
+    "file": "models/ftt_energy.pt",
+    "type": "torch",
+    "target": "energy",
+    "params": 17569,
+    "accuracy": {
+      "size-extrapolation": 100.8,
+      "corpus-transfer": 362.1
+    }
+  },
+  {
+    "model": "Kalman-trained FT-Transformer",
+    "file": "models/kalman_transformer_energy.pt",
+    "type": "torch",
+    "target": "energy(total,cold)",
+    "params": 10081,
+    "accuracy": {
+      "cold_baseline%": 127.9,
+      "cold_kalman%": 117.5
+    }
+  }
+]

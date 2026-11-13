@@ -1,0 +1,97 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 1.5312578475568444,
+            "n": 100,
+            "mean": 0.015312578475568444,
+            "variance": 0.000266047976905876,
+            "std_dev": 0.01631097719040389,
+            "min": 0.013314567971974611,
+            "max": 0.1767459079856053,
+            "unit": "batch",
+            "total_human": "1.53 seconds",
+            "mean_human": "15.31 milliseconds",
+            "std_dev_human": "16.31 milliseconds",
+            "min_human": "13.31 milliseconds",
+            "max_human": "176.75 milliseconds"
+        },
+        "stats": {
+            "input_files": 1,
+            "doc_len": {
+                "total": 111962244,
+                "n": 100000,
+                "mean": 1119.6224400000026,
+                "variance": 2197515.6501849177,
+                "std_dev": 1482.401986704321,
+                "min": 1,
+                "max": 11924
+            },
+            "documents": {
+                "total": 99999,
+                "mean": 99999.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\u2702\ufe0f - INFORMED FORMAT: \ud83d\udeab ToxicLanguageDetection",
+        "time_stats": {
+            "total": 0.08216694660950452,
+            "n": 100000,
+            "mean": 8.216694660950458e-07,
+            "variance": 1.7792796523953166e-12,
+            "std_dev": 1.3338964174160288e-06,
+            "min": 6.499467417597771e-07,
+            "max": 0.0004049281124025583,
+            "total_human": "0.08 seconds",
+            "mean_human": "0 milliseconds",
+            "std_dev_human": "0 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "0.41 milliseconds"
+        },
+        "stats": {
+            "total": 100000,
+            "not_formatted": 100000,
+            "doc_len": {
+                "total": 111962244,
+                "n": 100000,
+                "mean": 1119.6224400000026,
+                "variance": 2197515.6501849177,
+                "std_dev": 1482.401986704321,
+                "min": 1,
+                "max": 11924
+            }
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 5.037547966116108,
+            "n": 100000,
+            "mean": 5.0375479661161143e-05,
+            "variance": 5.745734658808181e-07,
+            "std_dev": 0.0007580062439589914,
+            "min": 3.875989932566881e-05,
+            "max": 0.15725468890741467,
+            "total_human": "5.04 seconds",
+            "mean_human": "0.05 milliseconds",
+            "std_dev_human": "0.76 milliseconds",
+            "min_human": "0.04 milliseconds",
+            "max_human": "157.25 milliseconds"
+        },
+        "stats": {
+            "XXXXX.parquet": 100000,
+            "total": 100000,
+            "doc_len": {
+                "total": 111962244,
+                "n": 100000,
+                "mean": 1119.6224400000026,
+                "variance": 2197515.6501849177,
+                "std_dev": 1482.401986704321,
+                "min": 1,
+                "max": 11924
+            }
+        }
+    }
+]

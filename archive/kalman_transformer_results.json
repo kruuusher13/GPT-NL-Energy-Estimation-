@@ -1,0 +1,62 @@
+{
+  "time": {
+    "baseline": 91.9600013865334,
+    "kalman": 93.7079610331857,
+    "per_corpus": {
+      "american_news": {
+        "baseline": 66.09898166886701,
+        "kalman": 62.742925741340414,
+        "rows_baseline": 44,
+        "rows_kalman": 220
+      },
+      "euro_parliament": {
+        "baseline": 60.494809858703846,
+        "kalman": 55.59531800235186,
+        "rows_baseline": 46,
+        "rows_kalman": 230
+      },
+      "german": {
+        "baseline": 19.253923067565662,
+        "kalman": 18.17481306010123,
+        "rows_baseline": 53,
+        "rows_kalman": 265
+      },
+      "github_code": {
+        "baseline": 195.0969669040888,
+        "kalman": 210.85984819789627,
+        "rows_baseline": 46,
+        "rows_kalman": 230
+      }
+    }
+  },
+  "energy": {
+    "baseline": 127.91831621081302,
+    "kalman": 117.45939496770536,
+    "per_corpus": {
+      "american_news": {
+        "baseline": 73.21928856423237,
+        "kalman": 69.70418529626781,
+        "rows_baseline": 44,
+        "rows_kalman": 220
+      },
+      "euro_parliament": {
+        "baseline": 77.3385561264265,
+        "kalman": 71.93291353697875,
+        "rows_baseline": 45,
+        "rows_kalman": 225
+      },
+      "german": {
+        "baseline": 20.791597263690576,
+        "kalman": 31.762654060022005,
+        "rows_baseline": 52,
+        "rows_kalman": 260
+      },
+      "github_code": {
+        "baseline": 299.43041083106283,
+        "kalman": 263.96006364329713,
+        "rows_baseline": 45,
+        "rows_kalman": 225
+      }
+    }
+  }
+}

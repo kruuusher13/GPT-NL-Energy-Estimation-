@@ -1,0 +1,80 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Romir Malik – From silicon to scale</title>
+<style>
+@page { size: A4; margin: 0; }
+html,body{margin:0;padding:0;}
+body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-family: "Inter", Arial, sans-serif; color: #e9eef3; background:#0b0f14; width:210mm; height:297mm; overflow:hidden; position:relative; }
+a { color: inherit; text-decoration: none; }
+.pad { position:absolute; inset:15mm 15mm 14mm 15mm; }
+.top { display:flex; justify-content:space-between; font-size:8.4pt; letter-spacing:1.6px; text-transform:uppercase; color:#8a9bb0; border-bottom:1px solid #26323f; padding-bottom:6px; }
+.top b { color:#e9eef3; }
+h1 { font-size: 34pt; line-height:1.0; margin: 11mm 0 9mm; letter-spacing:-1px; font-weight:800; }
+h1 span { color:#38d6c4; }
+.sub { font-size: 11pt; color:#9fb3c8; margin-bottom: 9mm; }
+.grid { display:grid; grid-template-columns: 62mm 1fr; gap: 0 11mm; }
+/* ladder */
+.ladder { position:relative; height: 160mm; }
+.rail { position:absolute; left: 7mm; top: 4mm; bottom: 4mm; width:2px; background: linear-gradient(to top, #38d6c4 0%, #38d6c4 58%, #3b4b5c 58%, #3b4b5c 100%); }
+.rung { position:absolute; left:0; right:0; display:flex; align-items:center; gap:4mm; }
+.dot { width:14px; height:14px; border-radius:50%; margin-left: calc(7mm - 6px); flex:none; }
+.done .dot { background:#38d6c4; box-shadow:0 0 10px rgba(56,214,196,.7); }
+.next .dot { background:#0b0f14; border:2px dashed #ffb454; width:12px; height:12px; }
+.goal .dot { background:#ffb454; box-shadow:0 0 12px rgba(255,180,84,.8); width:16px; height:16px; margin-left: calc(7mm - 7px); }
+.lab { line-height:1.2; }
+.lab .e { font-size: 13pt; font-weight:700; }
+.lab .n { font-size: 8pt; letter-spacing:1.2px; text-transform:uppercase; color:#8a9bb0; margin-top:1px; }
+.done .e { color:#38d6c4; } .next .e { color:#ffb454; font-size:11.5pt; } .goal .e { color:#fff; font-size:11.5pt; }
+.divider { position:absolute; left: 11mm; right:0; font-size:7.6pt; letter-spacing:1.4px; text-transform:uppercase; color:#5d7188; border-top:1px dashed #3b4b5c; padding-top:2px; }
+/* text */
+h2 { font-size: 9pt; letter-spacing: 1.8px; text-transform: uppercase; color:#38d6c4; margin: 0 0 3.5mm; font-weight:700; }
+p { font-size: 10.6pt; line-height:1.5; margin: 0 0 3.2mm; color:#dfe7ef; }
+.t { display:grid; grid-template-columns: 7mm 1fr; margin-bottom: 3.6mm; font-size:10.6pt; line-height:1.45; color:#dfe7ef; }
+.t .k { color:#ffb454; font-weight:800; font-size:12pt; }
+.t b { color:#fff; }
+.amb { border-left: 3px solid #ffb454; padding: 1mm 0 1mm 4mm; font-size: 13.5pt; line-height:1.35; font-weight:700; color:#fff; margin: 5mm 0 0; }
+.film { position:absolute; left:15mm; right:15mm; bottom:14mm; display:flex; align-items:center; gap:6mm; border-top:1px solid #26323f; padding-top:6mm; }
+.qr { background:#fff; padding:2.2mm; border-radius:2mm; line-height:0; }
+.qr img { width:24mm; height:24mm; }
+.film .w { font-size: 15pt; font-weight:800; color:#fff; }
+.film .w span { color:#38d6c4; }
+.film .s { font-size: 9pt; color:#8a9bb0; margin-top:1.5mm; }
+</style></head>
+<body>
+<div class="pad">
+  <div class="top"><span><b>Romir Malik</b> &nbsp;·&nbsp; TNO Traineeship, February 2027</span><span></span></div>
+  <h1>From silicon <span>to scale</span></h1>
+  
+
+  <div class="grid">
+    <div class="ladder">
+      <div class="rail"></div>
+      <div class="rung goal" style="top:0mm"><div class="dot"></div><div class="lab"><div class="e">Ambition</div><div class="n">Europe's compute, decided well</div></div></div>
+      <div class="rung next" style="top:17mm"><div class="dot"></div><div class="lab"><div class="e">Consultant</div><div class="n">the whole system</div></div></div>
+      <div class="rung next" style="top:32mm"><div class="dot"></div><div class="lab"><div class="e">Business developer</div><div class="n">knowledge into adoption</div></div></div>
+      <div class="rung next" style="top:47mm"><div class="dot"></div><div class="lab"><div class="e">Project leader</div><div class="n">leading the experts</div></div></div>
+      <div class="divider" style="top:63mm">Traineeship ↑ &nbsp;&nbsp; so far ↓</div>
+      <div class="rung done" style="top:73mm"><div class="dot"></div><div class="lab"><div class="e">10<sup>6</sup> J</div><div class="n">TNO · GPT-NL</div></div></div>
+      <div class="rung done" style="top:91mm"><div class="dot"></div><div class="lab"><div class="e">390 ms</div><div class="n">Torxflow · ConcertLab</div></div></div>
+      <div class="rung done" style="top:109mm"><div class="dot"></div><div class="lab"><div class="e">10<sup>7</sup> params</div><div class="n">1st place · chess</div></div></div>
+      <div class="rung done" style="top:127mm"><div class="dot"></div><div class="lab"><div class="e">10<sup>0</sup> m</div><div class="n">CSIR</div></div></div>
+      <div class="rung done" style="top:145mm"><div class="dot"></div><div class="lab"><div class="e">10<sup>&minus;3</sup> s</div><div class="n">ISRO</div></div></div>
+    </div>
+
+    <div>
+      <h2>Which talents will I develop?</h2>
+      <p>So far I have grown one talent: finding the bottleneck outside the part I was handed. The Traineeship is where I grow three more.</p>
+      <div class="t"><div class="k">1</div><div><b>Leading without being the expert.</b> As a project leader, steering specialists who know more than I do.</div></div>
+      <div class="t"><div class="k">2</div><div><b>Turning knowledge into adoption.</b> As a business developer, learning what partners will invest in, and why.</div></div>
+      <div class="t"><div class="k">3</div><div><b>Seeing the whole system.</b> As a consultant, weighing energy, policy and technology together.</div></div>
+
+      <h2 style="margin-top:7mm">How does this serve my ambition?</h2>
+      <p>Each rotation adds a scale I have never worked at: a team, a market, a policy question. A coach and peers make me learn it faster.</p>
+      <div class="amb">My long-term ambition: to help decide how Europe builds, and pays for, the computing its AI runs on.</div>
+    </div>
+  </div>
+</div>
+<a class="film" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3IbBSYe7hikufGneZeotopEMWpK/06af1b2a-1152-4c96-9c36-271269458fa4.mp4">
+  <div class="qr"><img src="qr.svg"></div>
+  <div><div class="w">▶ Watch: <span>research reel</span> (30 s)</div></div>
+</a>
+</body></html>

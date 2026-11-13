@@ -1,0 +1,210 @@
+#!/usr/bin/env bash
+# Harvest EAR readings + Datatrove stats from completed runs into measurements.csv.
+#
+# v2 goal: 12 hardware features (not v1's 4), survival rate from Datatrove stats.
+#
+# Reads:   $RUNS_DIR/*/pipeline*/stage*_*/logs/emission/ear_db_*_apps.csv
+#          $RUNS_DIR/*/pipeline*/stage*_*/logs/stats.json   (optional)
+# Writes:  $MEAS_DIR/measurements.csv
+#
+# Robustness: validates the EAR header BEFORE parsing rows. If a required column
+# is missing it aborts with the actual header dumped to stderr so you can see
+# what your EAR build is emitting. (v1 silently fell back to $0 = whole row,
+# which is what corrupted earlier runs of this script.)
+#
+# Usage:
+#   source env.sh
+#   bash 03_harvest.sh
+
+set -euo pipefail
+source "$(dirname "$0")/env.sh"
+
+mkdir -p "$MEAS_DIR"
+RAW="$MEAS_DIR/measurements_raw.csv"   # one row per node (per parallel SLURM task)
+OUT="$MEAS_DIR/measurements.csv"       # aggregated: one row per (size, replicate, stage)
+
+# Required EAR columns. If any of these are missing the script aborts.
+# (TIME_SEC is the one we know varies by EAR version — see ELAPSED fallback in awk.)
+REQUIRED_COLS=(JOBID NODENAME DC_NODE_POWER_W PCK_POWER_W DRAM_POWER_W \
+               MEM_GBS IO_MBS CPU_GFLOPS CPU_UTIL CPI AVG_CPUFREQ_KHZ \
+               L3_MISSES GPU0_POWER_W GPU0_GFLOPS)
+
+HEADER="slug,size,replicate,stage,job_id,nodename,partition,time_sec,dc_node_power_w,pck_power_w,dram_power_w,mem_gbs,io_mbs,cpu_gflops,cpu_util,cpi,avg_cpufreq_khz,l3_misses,gpu0_power_w,gpu0_gflops,n_in,n_out"
+echo "$HEADER" > "$RAW"
+
+# Prefer *_apps.csv (one row = one app). Skip *_loops.csv (those are sub-second samples).
+# Portable array fill (no mapfile — works on bash 3.2 too).
+EAR_FILES=()
+while IFS= read -r line; do
+  [ -n "$line" ] && EAR_FILES+=("$line")
+done < <(find "$RUNS_DIR" -path "*/emission/ear_db_*_apps.csv" 2>/dev/null | sort -u)
+
+if [ "${#EAR_FILES[@]}" -eq 0 ]; then
+  # Fallback: any ear_db_*.csv that isn't _loops.csv
+  while IFS= read -r line; do
+    [ -n "$line" ] && EAR_FILES+=("$line")
+  done < <(find "$RUNS_DIR" -path "*/emission/ear_db_*.csv" 2>/dev/null \
+           | grep -v '_loops\.csv$' | sort -u)
+fi
+
+if [ "${#EAR_FILES[@]}" -eq 0 ]; then
+  echo "[harvest] No EAR app CSVs found under $RUNS_DIR — nothing to harvest." >&2
+  exit 1
+fi
+
+# ── Validate the first CSV's header so we fail fast and loud ───────────────────
+first="${EAR_FILES[0]}"
+header_line=$(head -n 1 "$first")
+missing=()
+for col in "${REQUIRED_COLS[@]}"; do
+  if ! awk -F';' -v want="$col" 'NR==1{for(i=1;i<=NF;i++)if($i==want){found=1;exit}}END{exit !found}' "$first"; then
+    missing+=("$col")
+  fi
+done
+
+# TIME_SEC / ELAPSED probe (either is acceptable; we pick whichever exists)
+time_col=""
+for cand in TIME_SEC ELAPSED ELAPSED_SEC ELAPSED_TIME; do
+  if awk -F';' -v want="$cand" 'NR==1{for(i=1;i<=NF;i++)if($i==want){found=1;exit}}END{exit !found}' "$first"; then
+    time_col="$cand"
+    break
+  fi
+done
+if [ -z "$time_col" ]; then
+  missing+=("TIME_SEC|ELAPSED")
+fi
+
+if [ "${#missing[@]}" -gt 0 ]; then
+  echo "[harvest] FATAL: missing columns in EAR CSV: ${missing[*]}" >&2
+  echo "[harvest] File: $first" >&2
+  echo "[harvest] Actual header line:" >&2
+  echo "$header_line" >&2
+  echo "[harvest] Run 'bash 97_inspect_ear.sh' to print headers from all CSVs." >&2
+  exit 2
+fi
+
+echo "[harvest] Header validated. Using time column: $time_col"
+
+# ── Parse all EAR CSVs ──────────────────────────────────────────────────────────
+for ear_csv in "${EAR_FILES[@]}"; do
+  # Path layout: $RUNS_DIR/<slug>/pipelineXXXXX_*/stageY_<stage>/logs/emission/ear_db_*.csv
+  stage_dir="$(dirname "$(dirname "$(dirname "$ear_csv")")")"
+  stage_name="$(basename "$stage_dir" | sed -E 's/^stage[0-9]+_//')"
+  run_dir="$(dirname "$stage_dir")"
+  slug_dir="$(dirname "$run_dir")"
+  slug="$(basename "$slug_dir")"
+  size="${slug%_rep*}"; size="${size##*size}"
+  replicate="${slug##*_rep}"
+
+  # ── Pull stats.json for n_in / n_out if Datatrove wrote one ─────────────────
+  n_in=""; n_out=""
+  stats="$stage_dir/logs/stats.json"
+  if [ -f "$stats" ]; then
+    n_in=$(python3 -c "import json; d=json.load(open('$stats')); print(d.get('input_docs', d.get('total', '')))" 2>/dev/null || echo "")
+    n_out=$(python3 -c "import json; d=json.load(open('$stats')); print(d.get('output_docs', d.get('forwarded', '')))" 2>/dev/null || echo "")
+  fi
+
+  # ── Emit one CSV row per non-header line in the EAR CSV ────────────────────
+  awk -F';' -v slug="$slug" -v size="$size" -v rep="$replicate" \
+            -v stage="$stage_name" -v n_in="$n_in" -v n_out="$n_out" \
+            -v partition="$PARTITION" -v tcol="$time_col" '
+    function g(name,   i) {
+      # Safe getter: returns "" if column not in header (NEVER $0).
+      i = col[name] + 0
+      return (i > 0) ? $i : ""
+    }
+    NR == 1 {
+      for (i = 1; i <= NF; i++) col[$i] = i
+      header_nf = NF
+      next
+    }
+    # skip blank lines
+    NF == 0 { next }
+    # skip a repeated header line (some EAR CSVs concatenate runs)
+    $1 == "JOBID" { next }
+    # skip malformed lines: corrupt EAR writes produce concatenated or
+    # truncated rows whose field count != the header. Parsing those with the
+    # header column map yields shifted garbage (e.g. JOBNAME in the power slot).
+    NF != header_nf {
+      printf("[harvest] skip malformed line %d in %s (%d fields, expected %d)\n",
+             FNR, FILENAME, NF, header_nf) > "/dev/stderr"
+      next
+    }
+    {
+      printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+        slug, size, rep, stage,
+        g("JOBID"),
+        g("NODENAME"),
+        partition,
+        g(tcol),
+        g("DC_NODE_POWER_W"),
+        g("PCK_POWER_W"),
+        g("DRAM_POWER_W"),
+        g("MEM_GBS"),
+        g("IO_MBS"),
+        g("CPU_GFLOPS"),
+        g("CPU_UTIL"),
+        g("CPI"),
+        g("AVG_CPUFREQ_KHZ"),
+        g("L3_MISSES"),
+        g("GPU0_POWER_W"),
+        g("GPU0_GFLOPS"),
+        n_in, n_out)
+    }
+  ' "$ear_csv" >> "$RAW"
+done
+
+raw_rows=$(( $(wc -l < "$RAW") - 1 ))
+echo "[harvest] Wrote $raw_rows per-node rows to $RAW"
+
+# ── Sanity check on the raw file ────────────────────────────────────────────────
+bad=$(tail -n +2 "$RAW" | awk -F',' '$9 ~ /;/ {n++} END{print n+0}')
+if [ "$bad" -gt 0 ]; then
+  echo "[harvest] WARNING: $bad raw rows have ';' inside dc_node_power_w — header parse failed." >&2
+  echo "[harvest] Run: bash 97_inspect_ear.sh" >&2
+  exit 3
+fi
+
+# ── Aggregate per (slug, stage) ─────────────────────────────────────────────────
+# Each stage fans into N parallel SLURM tasks; each task writes one EAR row on its
+# own node. A measurement is the WHOLE stage, not one node:
+#   energy_j  = sum over nodes of (dc_node_power_w * time_sec)   [energy is additive]
+#   time_sec  = max over nodes                                   [wall time, parallel]
+#   dc_node_power_w = energy_j / time_sec  (effective aggregate power, so that any
+#                     downstream `power*time` still recovers total job energy)
+#   all rate/ratio features (cpi, gflops, util, ...) = mean over nodes
+echo "$HEADER" > "$OUT"
+tail -n +2 "$RAW" | awk -F',' -v OFS=',' '
+  {
+    key = $1 SUBSEP $4
+    if (!(key in seen)) {
+      seen[key] = 1; order[++nk] = key
+      slug[key]=$1; size[key]=$2; rep[key]=$3; stage[key]=$4
+      jobid[key]=$5; node[key]=$6; part[key]=$7
+      nin[key]=$21; nout[key]=$22
+    }
+    cnt[key]++
+    t = $8 + 0; p = $9 + 0
+    energy[key] += p * t
+    if (t > maxt[key]) maxt[key] = t
+    for (c = 10; c <= 20; c++) fsum[key, c] += $c + 0
+  }
+  END {
+    for (i = 1; i <= nk; i++) {
+      key = order[i]; t = maxt[key]
+      effp = (t > 0) ? energy[key] / t : 0
+      row = slug[key] OFS size[key] OFS rep[key] OFS stage[key] OFS jobid[key] \
+            OFS node[key] OFS part[key] OFS t OFS effp
+      for (c = 10; c <= 20; c++) row = row OFS (fsum[key, c] / cnt[key])
+      row = row OFS nin[key] OFS nout[key]
+      print row
+    }
+  }
+' >> "$OUT"
+
+agg_rows=$(( $(wc -l < "$OUT") - 1 ))
+echo "[harvest] Aggregated to $agg_rows stage-measurements in $OUT"
+echo "[harvest] By stage (aggregated):"
+tail -n +2 "$OUT" | awk -F',' '{print $4}' | sort | uniq -c | sort -k2
+
+echo "[harvest] Next: python3 04_fit_ridge.py  (or bash run_all.sh)"

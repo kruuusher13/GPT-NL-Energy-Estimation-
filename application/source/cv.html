@@ -1,0 +1,93 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Romir Malik – CV</title>
+<style>
+@page { size: A4; margin: 13mm 15mm 12mm 15mm; }
+body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-family: Arial, "Liberation Sans", Helvetica, sans-serif; font-size: 9.2pt; line-height: 1.34; color: #111; margin: 0; }
+a { color: #0b4fa3; text-decoration: none; }
+h1 { text-align: center; font-size: 19pt; margin: 0 0 2px; letter-spacing: .5px; }
+.contact { text-align: center; font-size: 8.6pt; color: #333; margin-bottom: 7px; }
+p.s { margin: 0 0 4px; text-align: left; }
+h2 { font-size: 10pt; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #111; padding-bottom: 1px; margin: 9px 0 4px; }
+h2 span { font-weight: normal; text-transform: none; letter-spacing: 0; font-size: 8.8pt; color: #333; }
+.row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 5px; gap: 10px; }
+.row .d { font-weight: 700; white-space: nowrap; }
+.role { color: #222; }
+ul { margin: 1px 0 0 0; padding-left: 14px; }
+li { margin: 0 0 2px; }
+.line { margin: 3px 0; }
+.foot { margin-top: 8px; font-size: 8.4pt; color: #444; }
+.avoid { break-inside: avoid; }
+</style></head>
+<body>
+<h1>ROMIR MALIK</h1>
+<div class="contact">Utrecht, Netherlands &nbsp;|&nbsp; +31 6 34386359 &nbsp;|&nbsp; <a href="mailto:romir.ds10@gmail.com">romir.ds10@gmail.com</a> &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/romirmalik/">linkedin.com/in/romirmalik</a> &nbsp;|&nbsp;<br><a href="https://github.com/kruuusher13">github.com/kruuusher13</a> &nbsp;|&nbsp; <a href="https://kruuusher13.github.io/Portfolio/">kruuusher13.github.io/Portfolio</a> &nbsp;|&nbsp; <a href="https://d2ol7oe51mr4n9.cloudfront.net/user_3IbBSYe7hikufGneZeotopEMWpK/06af1b2a-1152-4c96-9c36-271269458fa4.mp4">&#9654; 30-second film</a></div>
+
+<p class="s">MSc Applied Data Science, Utrecht University, completed August 2026. I work on the cost of computation: what a system spends in energy, latency and euros, and how to decide that before it is spent. A thesis at TNO pricing GPT-NL's data curation on the national supercomputer, on-board inference for satellites at ISRO, underwater inspection at CSIR, and the measurement layer behind a product in production. I like problems that need several disciplines in the room at once. Alongside the degree: the Honours Programme in Leadership, Head of External Relations of the Utrecht Data Science Community, and UtrechtInc's validation programme.</p>
+<p class="s"><b>Work authorisation:</b> Dutch MSc graduate (Utrecht, 2026), eligible for the orientation year permit and for kennismigrant sponsorship at the reduced salary threshold.</p>
+
+<h2>Publications</h2>
+<div class="row"><span><b>Complexity-aware energy estimation of the data curation pipeline for GPT-NL on HPC clusters.</b> TNO and Utrecht University. MSc thesis; code, CLI and model weights <a href="https://github.com/kruuusher13/gptnl-energy-estimation-ekf">[1]</a>.</span><span class="d">In preparation</span></div>
+<div class="row"><span><b>Rope-augmented path following and control of a remotely operated underwater vehicle using vision for stilling basin surveillance.</b> R. Malik et al., IEEE APSCON 2024 <a href="https://ieeexplore.ieee.org/document/10465897">[2]</a>.</span><span class="d">Jan 2024</span></div>
+
+<h2>Experience <span>: ordered by the size of the system, HPC down to silicon</span></h2>
+<div class="row"><span><b>TNO</b>, Netherlands<br><span class="role">MSc Thesis Researcher</span></span><span class="d">Apr 2026 to Jul 2026</span></div>
+<ul>
+<li>Gave the GPT-NL programme a way to <b>budget a curation run's energy, cost and CO2 before committing compute</b> on the national supercomputer, so its footprint could be planned rather than reported afterwards: a per-stage law predicting a held-out 400k document run to <b>2.8% error on the dominant stage</b> from calibration runs of up to 100k <a href="https://github.com/kruuusher13/gptnl-energy-estimation-ekf">[1]</a>.</li>
+<li>Made the estimate hold on a shared machine, where another tenant's job corrupts the readings: an extended Kalman filter with an innovation gate blends the prior with live per-job telemetry and rejects implausible values, <b>moving final error from +93% to +8%</b> on a contaminated run <a href="https://github.com/kruuusher13/gptnl-energy-estimation-ekf">[1]</a>, <a href="https://www.bsc.es/research-and-development/software-and-apps/software-list/ear-energy-management-framework-hpc">[3]</a>.</li>
+<li>Ran it across four corpora differing 100-fold in mean document length, establishing that estimates <b>transfer per character rather than per document</b>, and handed it over as a command-line tool rather than a notebook. Of six estimators, <b>the physics-based linear model beat all five learned ones</b> <a href="https://github.com/kruuusher13/gptnl-energy-estimation-ekf">[1]</a>.</li>
+</ul>
+<div class="row"><span><b>ConcertLab</b>, Netherlands<br><span class="role">Data Scientist</span></span><span class="d">Jul 2026 to present</span></div>
+<ul>
+<li>Work <b>directly with the CEO on data-informed strategy</b>: built the four-year P&amp;L, scenario and unit-economics model behind a live activation round, running capacity and breakeven across two scenarios so a plan reads as filming days to cover overhead rather than as a revenue line <a href="https://concertlab.com/">[4]</a>.</li>
+<li>Gave a studio with no instrumentation a way to see where its customers come from, joining acquisition source to booked call and <b>making channel attribution observable for the first time</b>: 11 containerised services and 12 always-on daemons unifying 5 enquiry channels on Postgres and Redis.</li>
+</ul>
+<div class="row"><span><b>Torxflow</b>, Netherlands<br><span class="role">Founding Engineer, part-time</span></span><span class="d">May 2026 to present</span></div>
+<ul>
+<li>Founding engineer on <b>a garage management platform built around three intelligence modules</b>, smart scheduling, vehicle intelligence and AI diagnosis, layered over the systems a Dutch workshop already runs rather than replacing them. The platform ships in Dutch and English <a href="https://torxflow.nl/">[5]</a>.</li>
+<li>Took the reception bottleneck out of the workshop's day: a licence plate resolves to service history, customer profile and parts availability, and telephone intake runs lookup, parts search and labour-time pricing concurrently, <b>completing the work inside the call at 390 ms median response</b>. Calls below a 94% mean intent-classification confidence route to a human rather than being guessed at.</li>
+</ul>
+<div class="avoid">
+<div class="row"><span><b>Council of Scientific and Industrial Research (CSIR)</b>, National Institute of Oceanography, Goa, India<br><span class="role">Machine Learning and Robotics Intern</span></span><span class="d">Sep 2023 to May 2024</span></div>
+<ul>
+<li>Built the perception and avoidance stack for an unmanned underwater vehicle working without GPS, <b>so dam and harbour inspection could run without sending divers into the water</b>. Chose monocular depth over a stereo rig because a second pressure housing adds a failure mode and its calibration drifts with depth <a href="https://github.com/kruuusher13/APF">[6]</a>.</li>
+<li>Chose potential fields over a planner for graceful degradation: a detection lost for one frame bends the path rather than breaking it. <b>Over 90% detection in turbid water and about 40% lower planning latency</b>, across 50 scenarios in a simulated environment built for the vehicle <a href="https://github.com/kruuusher13/BlueRov-Object-Avoidance">[7]</a>, <a href="https://github.com/kruuusher13/Maya_AUV">[8]</a>.</li>
+</ul>
+</div>
+<div class="avoid">
+<div class="row"><span><b>Indian Space Research Organisation (ISRO)</b>, Space Applications Centre, Ahmedabad, India<br><span class="role">Research Intern</span></span><span class="d">May 2023 to Aug 2023</span></div>
+<ul>
+<li>Made the case for running object detection on board a satellite rather than downlinking frames, and <b>delivered the feasibility study senior SAC scientists adopted</b> for future edge-computing architectures.</li>
+<li>Moved inference onto the FPGA fabric of a Xilinx Zynq MPSoC: <b>under 15 ms end-to-end at a sustained 60+ FPS</b>, a 4x speed-up over CPU at roughly 3x performance per watt. Identified the data path outside the offloaded region, not the kernel, as the Amdahl bound, and hit the target by overlapping transfer with compute, leaving the convolution kernel untouched.</li>
+</ul>
+</div>
+
+<div class="avoid">
+<h2>Leadership and entrepreneurship <span>: alongside the MSc</span></h2>
+<div class="row"><span><b>Utrecht Data Science Community</b>, Utrecht<br><span class="role">Head of External Relations, voluntary</span></span><span class="d">Sep 2025 to present</span></div>
+<ul><li>Own the industry side of Utrecht's data science community, which means finding the organisations worth talking to and then making the conversation happen: <b>partnerships with more than 10 organisations</b> and a pipeline connecting <b>more than 500 students</b> to corporate recruiters. Run the symposiums and in-house days end-to-end with volunteer teams, <b>attendance up 40% year on year</b>.</li></ul>
+<div class="row"><span><b>Utrecht University Honours Programme: Leadership</b> (10 EC), taken alongside the degree</span><span class="d">2025 to 2026</span></div>
+<div class="row"><span><b>UtrechtInc</b>, Utrecht Science Park &nbsp;<span class="role">Validation Programme, graduated, with Torxflow</span>: validated the market with prospective customers before committing to build further.</span><span class="d">2026</span></div>
+</div>
+
+<div class="avoid">
+<h2>Education</h2>
+<div class="row"><span><b>Utrecht University</b>, Utrecht, Netherlands &nbsp;MSc Applied Data Science, completed August 2026. Thesis at TNO.</span><span class="d">Sep 2025 to Aug 2026</span></div>
+<div class="row"><span><b>Manipal University Jaipur</b>, India &nbsp;BTech in Data Science and Engineering</span><span class="d">2020 to 2024</span></div>
+</div>
+
+<div class="avoid">
+<h2>Selected projects</h2>
+<div class="row"><span><b>Chess-Bot-20M</b>, Utrecht University: reframed move selection as classification over the 1,968 legal UCI moves rather than as text generation, with legality applied as a mask before the argmax so illegal moves are arithmetically unreachable. 38.9M parameters trained on 20M positions; <b>won the INFOMTALC 2026 tournament against 7B-parameter baselines</b>, 180 times its size <a href="https://github.com/kruuusher13/Chess-Bot-20M">[9]</a>.</span><span class="d">Mar 2026</span></div>
+<div class="row"><span><b>Point-LIO on a Unitree Go2</b>: containerised lidar-inertial state estimation over a Unitree L1, in one Docker environment behaving identically on ARM64 and AMD64. Ablations located the failure modes: a coarser voxel filter drifts earlier, and disabling online extrinsic estimation tilts the map immediately <a href="https://github.com/kruuusher13/UnitreeL1-pointLIO2">[10]</a>.</span><span class="d">2026</span></div>
+</div>
+
+<div class="avoid">
+<h2>Technical skills and languages</h2>
+<div class="line"><b>Tools:</b> Python, PyTorch, SQL, C++, SLURM and Snellius, extended Kalman filtering, ROS 2, Zynq MPSoC, transformers, scikit-learn, XGBoost, LLM APIs and RAG, ORB-SLAM3, OpenCV, Docker, Postgres, Verilog, CUDA C.</div>
+<div class="line"><b>Languages:</b> Dutch (A1, in classes), English (fluent), Hindi (native).</div>
+
+<h2>Reference</h2>
+<div class="line"><b>Julio de Oliveira Filho</b>, TNO: supervisor of my MSc thesis in the GPT-NL programme. <a href="mailto:julio.deoliveirafilho@tno.nl">julio.deoliveirafilho@tno.nl</a></div>
+<div class="foot">Every marker links to its source. Repositories at github.com/kruuusher13; full record at kruuusher13.github.io/Portfolio.</div>
+</div>
+</body></html>

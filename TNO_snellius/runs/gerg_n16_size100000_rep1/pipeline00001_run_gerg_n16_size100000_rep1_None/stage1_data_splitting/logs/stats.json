@@ -1,0 +1,115 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 22.460721029900014,
+            "n": 352,
+            "mean": 0.06380886656221595,
+            "variance": 0.001693613997322017,
+            "std_dev": 0.04115354173484971,
+            "min": 0.00419582799077034,
+            "max": 0.12106004997622222,
+            "unit": "batch",
+            "total_human": "22.46 seconds",
+            "mean_human": "63.81 milliseconds",
+            "std_dev_human": "41.15 milliseconds",
+            "min_human": "4.20 milliseconds",
+            "max_human": "121.06 milliseconds",
+            "global_mean": 1.403795064368751,
+            "global_mean_human": "1.40 seconds",
+            "global_min": 1.294893946731463,
+            "global_min_human": "1.29 seconds",
+            "global_max": 1.5178901171311736,
+            "global_max_human": "1.52 seconds",
+            "global_std_dev": 0.09565202961396994,
+            "global_std_dev_human": "0.10 seconds"
+        },
+        "stats": {
+            "input_files": {
+                "total": 120,
+                "n": 16,
+                "mean": 7.5,
+                "variance": 0.26666666666666666,
+                "std_dev": 0.5163977794943222,
+                "min": 7,
+                "max": 8,
+                "unit": "task"
+            },
+            "doc_len": {
+                "total": 11680897935,
+                "n": 246000,
+                "mean": 47483.324939024424,
+                "variance": 56732000.86245465,
+                "std_dev": 7532.064847201905,
+                "min": 1,
+                "max": 264837
+            },
+            "documents": {
+                "total": 245880,
+                "n": 120,
+                "mean": 2049.0,
+                "variance": 336.1344537815131,
+                "std_dev": 18.33396994056424,
+                "min": 1999,
+                "max": 2099,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 43.77308858925244,
+            "n": 246000,
+            "mean": 0.0001779393845091563,
+            "variance": 2.823635893212055e-05,
+            "std_dev": 0.005313789507697925,
+            "min": 3.4032040275633335e-05,
+            "max": 0.6805170199368149,
+            "total_human": "43.77 seconds",
+            "mean_human": "0.18 milliseconds",
+            "std_dev_human": "5.31 milliseconds",
+            "min_human": "0.03 milliseconds",
+            "max_human": "680.52 milliseconds",
+            "global_mean": 2.7358180368282774,
+            "global_mean_human": "2.74 seconds",
+            "global_min": 2.3641974120400846,
+            "global_min_human": "2.36 seconds",
+            "global_max": 3.052768819150515,
+            "global_max_human": "3.05 seconds",
+            "global_std_dev": 0.21359750622003584,
+            "global_std_dev_human": "0.21 seconds"
+        },
+        "stats": {
+            "XXXXX.parquet": {
+                "total": 246000,
+                "n": 16,
+                "mean": 15375.0,
+                "variance": 1082333.3333333335,
+                "std_dev": 1040.3525043625039,
+                "min": 14300,
+                "max": 16400,
+                "unit": "task"
+            },
+            "total": {
+                "total": 246000,
+                "n": 16,
+                "mean": 15375.0,
+                "variance": 1082333.3333333335,
+                "std_dev": 1040.3525043625039,
+                "min": 14300,
+                "max": 16400,
+                "unit": "task"
+            },
+            "doc_len": {
+                "total": 11680897935,
+                "n": 246000,
+                "mean": 47483.324939024424,
+                "variance": 56732000.86245465,
+                "std_dev": 7532.064847201905,
+                "min": 1,
+                "max": 264837
+            }
+        }
+    }
+]

@@ -1,0 +1,136 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 0.5385100545827299,
+            "n": 16,
+            "mean": 0.03365687841142062,
+            "variance": 0.004086108862448867,
+            "std_dev": 0.06392267878029571,
+            "min": 0,
+            "max": 0.19092848198488355,
+            "unit": "batch",
+            "total_human": "0.54 seconds",
+            "mean_human": "33.66 milliseconds",
+            "std_dev_human": "63.92 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "190.93 milliseconds",
+            "global_mean": 0.03365687841142062,
+            "global_mean_human": "0.03 seconds",
+            "global_min": 0,
+            "global_min_human": "0 seconds",
+            "global_max": 0.19092848198488355,
+            "global_max_human": "0.19 seconds",
+            "global_std_dev": 0.06392267878029573,
+            "global_std_dev_human": "0.06 seconds"
+        },
+        "stats": {
+            "input_files": {
+                "total": 9,
+                "unit": "task"
+            },
+            "doc_len": {
+                "total": 248252976,
+                "n": 656,
+                "mean": 378434.4146341463,
+                "variance": 42902995922.20644,
+                "std_dev": 207130.38387017595,
+                "min": 3913,
+                "max": 1162449
+            },
+            "documents": {
+                "total": 647,
+                "n": 9,
+                "mean": 71.88888888888889,
+                "variance": 8220.111111111111,
+                "std_dev": 90.66482841273738,
+                "min": 0,
+                "max": 248.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83e\udec2 - DEDUP: \ud83c\udfaf MinHash stage 4",
+        "time_stats": 0,
+        "stats": {
+            "total": {
+                "total": 656,
+                "n": 9,
+                "mean": 72.88888888888889,
+                "variance": 8220.111111111111,
+                "std_dev": 90.66482841273738,
+                "min": 1,
+                "max": 249,
+                "unit": "task"
+            },
+            "forwarded": {
+                "total": 656,
+                "n": 9,
+                "mean": 72.88888888888889,
+                "variance": 8220.111111111111,
+                "std_dev": 90.66482841273738,
+                "min": 1,
+                "max": 249,
+                "unit": "task"
+            }
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 3.2457334683276713,
+            "n": 663,
+            "mean": 0.004895525593254407,
+            "variance": 0.0016845573801953376,
+            "std_dev": 0.04104335975764335,
+            "min": 0,
+            "max": 0.37776619801297784,
+            "unit": "task",
+            "total_human": "3.25 seconds",
+            "mean_human": "4.90 milliseconds",
+            "std_dev_human": "41.04 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "377.77 milliseconds",
+            "global_mean": 0.20285834177047946,
+            "global_mean_human": "0.20 seconds",
+            "global_min": 0,
+            "global_min_human": "0 seconds",
+            "global_max": 0.3844034830108285,
+            "global_max_human": "0.38 seconds",
+            "global_std_dev": 0.18559279183833993,
+            "global_std_dev_human": "0.19 seconds"
+        },
+        "stats": {
+            "XXXXX.parquet": {
+                "total": 656,
+                "n": 9,
+                "mean": 72.88888888888889,
+                "variance": 8220.111111111111,
+                "std_dev": 90.66482841273738,
+                "min": 1,
+                "max": 249,
+                "unit": "task"
+            },
+            "total": {
+                "total": 656,
+                "n": 9,
+                "mean": 72.88888888888889,
+                "variance": 8220.111111111111,
+                "std_dev": 90.66482841273738,
+                "min": 1,
+                "max": 249,
+                "unit": "task"
+            },
+            "doc_len": {
+                "total": 248252976,
+                "n": 656,
+                "mean": 378434.4146341463,
+                "variance": 42902995922.20644,
+                "std_dev": 207130.38387017595,
+                "min": 3913,
+                "max": 1162449
+            }
+        }
+    }
+]

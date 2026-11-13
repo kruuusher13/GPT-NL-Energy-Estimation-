@@ -1,0 +1,52 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 0.2463348361197859,
+            "n": 3,
+            "mean": 0.08211161203992864,
+            "variance": 0.005012547818155031,
+            "std_dev": 0.070799348995277,
+            "min": 0.0006963741034269333,
+            "max": 0.12923928489908576,
+            "unit": "batch",
+            "total_human": "0.25 seconds",
+            "mean_human": "82.11 milliseconds",
+            "std_dev_human": "70.80 milliseconds",
+            "min_human": "0.70 milliseconds",
+            "max_human": "129.24 milliseconds"
+        },
+        "stats": {
+            "input_files": 1,
+            "doc_len": {
+                "total": 96021254,
+                "n": 2002,
+                "mean": 47962.66433566431,
+                "variance": 36155912.04119621,
+                "std_dev": 6012.978633023421,
+                "min": 1815,
+                "max": 63142
+            },
+            "documents": {
+                "total": 2001,
+                "mean": 2001.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83e\udec2 - DEDUP: \ud83c\udfaf MinHash stage 1",
+        "time_stats": {
+            "total": 80.5259695011191,
+            "mean": 80.5259695011191,
+            "total_human": "1 minute and 20.53 seconds",
+            "mean_human": "1 minute, 20 seconds and 525.97 milliseconds",
+            "std_dev_human": "0 milliseconds",
+            "min_human": "1 minute, 20 seconds and 525.97 milliseconds",
+            "max_human": "1 minute, 20 seconds and 525.97 milliseconds"
+        },
+        "stats": {
+            "total": 2002
+        }
+    }
+]

@@ -1,0 +1,33 @@
+[
+    {
+        "name": "\ud83e\udec2 - DEDUP: \ud83c\udfaf MinHash stage 2",
+        "time_stats": {
+            "total": 0.3375297007150948,
+            "n": 14,
+            "mean": 0.024109264336792485,
+            "variance": 0.00011851847031350007,
+            "std_dev": 0.01088661886507928,
+            "min": 0.004683935083448887,
+            "max": 0.041820890037342906,
+            "total_human": "0.34 seconds",
+            "mean_human": "24.11 milliseconds",
+            "std_dev_human": "10.89 milliseconds",
+            "min_human": "4.68 milliseconds",
+            "max_human": "41.82 milliseconds",
+            "global_mean": 0.024109264336792485,
+            "global_mean_human": "0.02 seconds",
+            "global_min": 0.004683935083448887,
+            "global_min_human": "0 seconds",
+            "global_max": 0.041820890037342906,
+            "global_max_human": "0.04 seconds",
+            "global_std_dev": 0.01088661886507928,
+            "global_std_dev_human": "0.01 seconds"
+        },
+        "stats": {
+            "total_matches": {
+                "total": 14,
+                "unit": "task"
+            }
+        }
+    }
+]

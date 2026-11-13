@@ -1,0 +1,84 @@
+\begin{thebibliography}{11}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{Barcelona Supercomputing Center}(2024)]{bsc_ear}
+{Barcelona Supercomputing Center}.
+\newblock Energy aware runtime ({EAR}).
+\newblock \url{https://gitlab.bsc.es/ear_team/ear}, 2024.
+\newblock Accessed: 2026-06-09.
+
+\bibitem[Dell et~al.(2023)Dell, Carlson, Bryan, Silcock, Arora,
+  et~al.]{american_stories}
+Melissa Dell, Jacob Carlson, Tom Bryan, Emily Silcock, Abhishek Arora, et~al.
+\newblock {American Stories}: A large-scale structured text dataset of
+  historical {U.S.} newspapers.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2023.
+\newblock Datasets and Benchmarks Track.
+
+\bibitem[{HuggingFace}(2024)]{datatrove}
+{HuggingFace}.
+\newblock {Datatrove}: Large scale data processing for {LLM} training.
+\newblock \url{https://github.com/huggingface/datatrove}, 2024.
+\newblock Accessed: 2026-06-09.
+
+\bibitem[Koehn(2005)]{koehn2005europarl}
+Philipp Koehn.
+\newblock {Europarl}: A parallel corpus for statistical machine translation.
+\newblock In \emph{MT Summit X}, pages 79--86, 2005.
+\newblock URL \url{https://www.statmt.org/europarl/}.
+
+\bibitem[Montgomery et~al.(2012)Montgomery, Peck, and
+  Vining]{montgomery2012introduction}
+Douglas~C Montgomery, Elizabeth~A Peck, and G~Geoffrey Vining.
+\newblock \emph{Introduction to Linear Regression Analysis}.
+\newblock John Wiley \& Sons, 5th edition, 2012.
+
+\bibitem[Patterson et~al.(2021)Patterson, Gonzalez, Le, Liang, Munguia,
+  Rothchild, So, Texier, and Dean]{patterson2021carbon}
+David Patterson, Joseph Gonzalez, Quoc Le, Chen Liang, Lluis-Miquel Munguia,
+  Daniel Rothchild, David So, Maud Texier, and Jeff Dean.
+\newblock Carbon emissions and large neural network training.
+\newblock 2021.
+\newblock \doi{10.48550/arXiv.2104.10350}.
+\newblock URL \url{https://arxiv.org/abs/2104.10350}.
+
+\bibitem[S\"{a}rkk\"{a}(2013)]{sarkka2013bayesian}
+Simo S\"{a}rkk\"{a}.
+\newblock \emph{Bayesian Filtering and Smoothing}.
+\newblock Cambridge University Press, 2013.
+\newblock \doi{10.1017/CBO9781139344203}.
+
+\bibitem[Strubell et~al.(2019)Strubell, Ganesh, and
+  McCallum]{strubell2019energy}
+Emma Strubell, Ananya Ganesh, and Andrew McCallum.
+\newblock Energy and policy considerations for deep learning in {NLP}.
+\newblock In \emph{Proceedings of the 57th Annual Meeting of the Association
+  for Computational Linguistics}, pages 3645--3650, 2019.
+\newblock \doi{10.18653/v1/P19-1355}.
+\newblock URL \url{https://aclanthology.org/P19-1355}.
+
+\bibitem[{SURF}(2024)]{surf_snellius}
+{SURF}.
+\newblock {Snellius} national supercomputer.
+\newblock \url{https://www.surf.nl/en/snellius-national-supercomputer}, 2024.
+\newblock Accessed: 2026-06-09.
+
+\bibitem[{TNO} and {SURF}(2025)]{gptnl_architecture}
+{TNO} and {SURF}.
+\newblock {GPT-NL} data curation pipeline architecture.
+\newblock Technical Report GPTNL-DEL-4001, TNO, 2025.
+\newblock TNO Public.
+
+\bibitem[Welch and Bishop(1995)]{welch2006kalman}
+Greg Welch and Gary Bishop.
+\newblock An introduction to the {Kalman} filter.
+\newblock Technical Report TR 95-041, University of North Carolina at Chapel
+  Hill, 1995.
+\newblock URL \url{https://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf}.
+
+\end{thebibliography}

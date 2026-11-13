@@ -1,0 +1,224 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 2.0774307107785717,
+            "n": 16,
+            "mean": 0.12983941942366073,
+            "variance": 0.012368657357625299,
+            "std_dev": 0.11121446559519718,
+            "min": 0,
+            "max": 0.2410784859675914,
+            "unit": "batch",
+            "total_human": "2.08 seconds",
+            "mean_human": "129.84 milliseconds",
+            "std_dev_human": "111.21 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "241.08 milliseconds",
+            "global_mean": 0.12983941942366073,
+            "global_mean_human": "0.13 seconds",
+            "global_min": 0,
+            "global_min_human": "0 seconds",
+            "global_max": 0.2410784859675914,
+            "global_max_human": "0.24 seconds",
+            "global_std_dev": 0.11121446559519718,
+            "global_std_dev_human": "0.11 seconds"
+        },
+        "stats": {
+            "input_files": {
+                "total": 10,
+                "unit": "task"
+            },
+            "doc_len": {
+                "total": 950462068,
+                "n": 3368,
+                "mean": 282203.7019002375,
+                "variance": 159450122827.52557,
+                "std_dev": 399312.06196097506,
+                "min": 609,
+                "max": 5969570
+            },
+            "documents": {
+                "total": 3358,
+                "n": 10,
+                "mean": 335.8,
+                "variance": 23009.066666666666,
+                "std_dev": 151.68739785053558,
+                "min": 117.0,
+                "max": 549.0,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\u2702\ufe0f - FORMAT: \ud83d\ude0e FTFY",
+        "time_stats": {
+            "total": 521.2211413881159,
+            "n": 3374,
+            "mean": 0.1544816660901351,
+            "variance": 0.05812963807002656,
+            "std_dev": 0.24110088774209554,
+            "min": 0,
+            "max": 3.8689780100248754,
+            "unit": "task",
+            "total_human": "8 minutes and 41.22 seconds",
+            "mean_human": "154.48 milliseconds",
+            "std_dev_human": "241.10 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "3 seconds and 868.98 milliseconds",
+            "global_mean": 32.576321336757246,
+            "global_mean_human": "32.58 seconds",
+            "global_min": 0,
+            "global_min_human": "0 seconds",
+            "global_max": 68.22354177199304,
+            "global_max_human": "1 minute and 8.22 seconds",
+            "global_std_dev": 28.321380740642102,
+            "global_std_dev_human": "28.32 seconds"
+        },
+        "stats": {
+            "total": {
+                "total": 3368,
+                "n": 10,
+                "mean": 336.8,
+                "variance": 23009.066666666666,
+                "std_dev": 151.68739785053558,
+                "min": 118,
+                "max": 550,
+                "unit": "task"
+            }
+        }
+    },
+    {
+        "name": "\u2702\ufe0f - FORMAT: \ud83d\udd33\ud83d\udd32 Punctuation Formatter",
+        "time_stats": {
+            "total": 79.57268567878054,
+            "n": 3374,
+            "mean": 0.023584079928506384,
+            "variance": 0.0011309129537313987,
+            "std_dev": 0.033629049254051156,
+            "min": 0,
+            "max": 0.4890199129586108,
+            "unit": "task",
+            "total_human": "1 minute and 19.57 seconds",
+            "mean_human": "23.58 milliseconds",
+            "std_dev_human": "33.63 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "489.02 milliseconds",
+            "global_mean": 4.973292854923784,
+            "global_mean_human": "4.97 seconds",
+            "global_min": 0,
+            "global_min_human": "0 seconds",
+            "global_max": 9.078938070626464,
+            "global_max_human": "9.08 seconds",
+            "global_std_dev": 4.262588204227726,
+            "global_std_dev_human": "4.26 seconds"
+        },
+        "stats": {
+            "total": {
+                "total": 3368,
+                "n": 10,
+                "mean": 336.8,
+                "variance": 23009.066666666666,
+                "std_dev": 151.68739785053558,
+                "min": 118,
+                "max": 550,
+                "unit": "task"
+            }
+        }
+    },
+    {
+        "name": "\u2702\ufe0f - FORMAT: \ud83d\uddfb Whitespace Formatter",
+        "time_stats": {
+            "total": 67.69587980711367,
+            "n": 3374,
+            "mean": 0.020063983345321182,
+            "variance": 0.0008158588744595311,
+            "std_dev": 0.028563243416312705,
+            "min": 0,
+            "max": 0.43526669399579987,
+            "unit": "task",
+            "total_human": "1 minute and 7.70 seconds",
+            "mean_human": "20.06 milliseconds",
+            "std_dev_human": "28.56 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "435.27 milliseconds",
+            "global_mean": 4.230992487944604,
+            "global_mean_human": "4.23 seconds",
+            "global_min": 0,
+            "global_min_human": "0 seconds",
+            "global_max": 7.832080492342357,
+            "global_max_human": "7.83 seconds",
+            "global_std_dev": 3.6328125900473625,
+            "global_std_dev_human": "3.63 seconds"
+        },
+        "stats": {
+            "total": {
+                "total": 3368,
+                "n": 10,
+                "mean": 336.8,
+                "variance": 23009.066666666666,
+                "std_dev": 151.68739785053558,
+                "min": 118,
+                "max": 550,
+                "unit": "task"
+            }
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 4.744065207778476,
+            "n": 3374,
+            "mean": 0.001406065562471392,
+            "variance": 0.000658527323101979,
+            "std_dev": 0.025661787215663274,
+            "min": 0,
+            "max": 0.7257725590025075,
+            "unit": "task",
+            "total_human": "4.74 seconds",
+            "mean_human": "1.41 milliseconds",
+            "std_dev_human": "25.66 milliseconds",
+            "min_human": "0 milliseconds",
+            "max_human": "725.77 milliseconds",
+            "global_mean": 0.29650407548615476,
+            "global_mean_human": "0.30 seconds",
+            "global_min": 0,
+            "global_min_human": "0 seconds",
+            "global_max": 0.7523025474511087,
+            "global_max_human": "0.75 seconds",
+            "global_std_dev": 0.28524195555315823,
+            "global_std_dev_human": "0.29 seconds"
+        },
+        "stats": {
+            "XXXXX.parquet": {
+                "total": 3368,
+                "n": 10,
+                "mean": 336.8,
+                "variance": 23009.066666666666,
+                "std_dev": 151.68739785053558,
+                "min": 118,
+                "max": 550,
+                "unit": "task"
+            },
+            "total": {
+                "total": 3368,
+                "n": 10,
+                "mean": 336.8,
+                "variance": 23009.066666666666,
+                "std_dev": 151.68739785053558,
+                "min": 118,
+                "max": 550,
+                "unit": "task"
+            },
+            "doc_len": {
+                "total": 950561129,
+                "n": 3368,
+                "mean": 282233.11431116395,
+                "variance": 159484665167.0689,
+                "std_dev": 399355.31193045236,
+                "min": 608,
+                "max": 5969731
+            }
+        }
+    }
+]

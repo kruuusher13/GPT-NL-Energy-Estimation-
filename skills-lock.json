@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "posterskill-academic-posters": {
+      "source": "Aradotso/trending-skills",
+      "sourceType": "github",
+      "skillPath": "skills/posterskill-academic-posters/SKILL.md",
+      "computedHash": "f4135805f3e92f5b1644540a2f3c648aa53264f5880e442e6b105b1544b2289d"
+    }
+  }
+}

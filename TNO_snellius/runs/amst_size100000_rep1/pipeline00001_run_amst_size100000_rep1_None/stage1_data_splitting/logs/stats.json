@@ -1,0 +1,72 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 1.4682230447651818,
+            "n": 101,
+            "mean": 0.014536861829358233,
+            "variance": 1.4114945088611834e-05,
+            "std_dev": 0.0037569861709369962,
+            "min": 0.009623681020457298,
+            "max": 0.040096742042806,
+            "unit": "batch",
+            "total_human": "1.47 seconds",
+            "mean_human": "14.54 milliseconds",
+            "std_dev_human": "3.76 milliseconds",
+            "min_human": "9.62 milliseconds",
+            "max_human": "40.10 milliseconds"
+        },
+        "stats": {
+            "input_files": 2,
+            "doc_len": {
+                "total": 111962244,
+                "n": 100000,
+                "mean": 1119.6224400000026,
+                "variance": 2197515.6501849177,
+                "std_dev": 1482.401986704321,
+                "min": 1,
+                "max": 11924
+            },
+            "documents": {
+                "total": 99999,
+                "n": 2,
+                "mean": 49999.5,
+                "variance": 1320928600.5,
+                "std_dev": 36344.581446207354,
+                "min": 24300,
+                "max": 75699,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: \ud83d\udcd2 Parquet",
+        "time_stats": {
+            "total": 4.6884907384519465,
+            "n": 100000,
+            "mean": 4.6884907384519376e-05,
+            "variance": 3.5463846352907647e-06,
+            "std_dev": 0.0018831847055694683,
+            "min": 3.423099406063557e-05,
+            "max": 0.5936180760036223,
+            "total_human": "4.69 seconds",
+            "mean_human": "0.05 milliseconds",
+            "std_dev_human": "1.88 milliseconds",
+            "min_human": "0.03 milliseconds",
+            "max_human": "593.62 milliseconds"
+        },
+        "stats": {
+            "XXXXX.parquet": 100000,
+            "total": 100000,
+            "doc_len": {
+                "total": 111962244,
+                "n": 100000,
+                "mean": 1119.6224400000026,
+                "variance": 2197515.6501849177,
+                "std_dev": 1482.401986704321,
+                "min": 1,
+                "max": 11924
+            }
+        }
+    }
+]
